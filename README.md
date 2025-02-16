@@ -16,6 +16,8 @@
     - [Data](#data)
     - [Outputs](#outputs)
   - [Deployment Instructions](#deployment-instructions)
+    - [From Terraform Registry](#from-terraform-registry)
+    - [From Source](#from-source)
   - [Cleanup](#cleanup)
   - [Troubleshooting](#troubleshooting)
 
