@@ -50,17 +50,20 @@ Checked the cost of this solution with [infracost](https://www.infracost.io/), t
 
 ```
 .
-├── cloudtrail.tf
-├── cloudwatch.tf
-├── data.tf
-├── lambda.tf
-├── outputs.tf
-├── providers.tf
+├── main.tf
 ├── README.md
-├── s3_bucket.tf
 ├── secrets.tfvars
-├── sns.tf
 ├── variables.tf
+├── modules
+│   └── cloudtrail.tf
+|   └── cloudwatch.tf
+|   └── data.tf
+|   └── lambda.tf
+|   └── outputs.tf
+|   └── providers.tf
+|   └── s3_bucket.tf
+|   └── sns.tf
+|   └── variables.tf
 ├── lambda
 │   └── lambda_function.py
 |   └── lambda_payload_CreateUser.json
