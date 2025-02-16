@@ -50,20 +50,17 @@ Checked the cost of this solution with [infracost](https://www.infracost.io/), t
 
 ```
 .
-├── main.tf
+├── cloudtrail.tf
+├── cloudwatch.tf
+├── data.tf
+├── lambda.tf
+├── outputs.tf
+├── providers.tf
 ├── README.md
+├── s3_bucket.tf
 ├── secrets.tfvars
+├── sns.tf
 ├── variables.tf
-├── modules
-│   └── cloudtrail.tf
-|   └── cloudwatch.tf
-|   └── data.tf
-|   └── lambda.tf
-|   └── outputs.tf
-|   └── providers.tf
-|   └── s3_bucket.tf
-|   └── sns.tf
-|   └── variables.tf
 ├── lambda
 │   └── lambda_function.py
 |   └── lambda_payload_CreateUser.json
@@ -106,21 +103,54 @@ outputs.tf = Output project information for the user
 
 ## Deployment Instructions
 
-1. Clone this repository
-2. Update variables in `secret.tfvars` if needed
-3. Initialize Terraform:
+### From Terraform Registry
+1. Update variables in `variables.tf` if needed 
+2. add main.tf
+```
+module "iam-security-events-monitor" {
+  source             = "mjhfvi/iam-security-events-monitor/aws"
+  version            = "0.1.1"
+  aws_access_key     = var.aws_access_key
+  aws_secret_key     = var.aws_secret_key
+  environment        = var.environment
+  owner_name         = var.owner_name
+  project_name       = var.project_name
+  notification_email = var.notification_email
+  notification_phone = var.notification_phone
+}
+```
+1. Update variables in `secret.tfvars` if needed
+2. Initialize Terraform:
    ```bash
    terraform init
    ```
-4. Review the planned changes:
+3. Review the planned changes:
    ```bash
    terraform plan -var-file="secret.tfvars" -out=plan-out
    ```
-5. Apply the configuration:
+4. Apply the configuration:
    ```bash
    terraform apply "plan-out"
    ```
-6. Subscribe to the SNS topic (the ARN will be in the Terraform outputs)
+
+### From Source
+
+1. Clone this repository
+2. Update variables in `variables.tf` if needed 
+3. Update variables in `secret.tfvars` if needed
+4. Initialize Terraform:
+   ```bash
+   terraform init
+   ```
+5. Review the planned changes:
+   ```bash
+   terraform plan -var-file="secret.tfvars" -out=plan-out
+   ```
+6. Apply the configuration:
+   ```bash
+   terraform apply "plan-out"
+   ```
+7. Subscribe to the SNS topic (the ARN will be in the Terraform outputs)
 
 ## Cleanup
 
@@ -128,6 +158,8 @@ To remove all created resources:
 ```bash
 terraform destroy -var-file="secret.tfvars" -auto-approve
 ```
+### Post Setup
+- approve the email from AWS "AWS Notification - Subscription Confirmation" by clicking the link in the email `SubscribeURL`
 
 ## Troubleshooting
 
