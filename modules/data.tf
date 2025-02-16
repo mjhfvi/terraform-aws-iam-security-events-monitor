@@ -16,8 +16,8 @@ data "aws_lambda_function" "iam_event_monitor" {
 
 data "archive_file" "iam_event_monitor" {
   type        = "zip"
-  source_file = "${path.root}/lambda/iam_event_monitor.py"
-  output_path = "${path.root}/lambda/iam_event_monitor.zip"
+  source_file = "${path.module}/../lambda/iam_event_monitor.py"
+  output_path = "${path.module}/../lambda/iam_event_monitor.zip"
 }
 
 resource "random_string" "bucket_suffix" {
