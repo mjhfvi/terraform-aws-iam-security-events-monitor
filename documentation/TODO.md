@@ -1,6 +1,6 @@
 ## Todo features
 - [x] add vscode lambda test function
-- [ ] build the project as a module
+- [x] build the project as a module
 - [ ] change 2 'aws_iam_role_policy_attachment' resources in lambda.tf to for_each loop
 - [ ] change resources aws_iam_role to data for usablity
 - [ ] add kms encryption
