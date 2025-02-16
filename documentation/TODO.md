@@ -8,3 +8,5 @@
 - [ ] add python code for LLM query url to review event information
 - [ ] add opensearch for logs, it will be used as a RAG db for the LLM
 - [ ] replace python code SNS destination with lambda 'Add destination'
+- [ ] support for multiple email addresses
+- [ ] support for multiple sms numbers
