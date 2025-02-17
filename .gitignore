@@ -1,0 +1,6 @@
+**/plan-out
+.terraform.lock.hcl
+**/.terraform/
+terraform.tfstate*
+lambda/iam_event_monitor.zip
+secret.tfvars
