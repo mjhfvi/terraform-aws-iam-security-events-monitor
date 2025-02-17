@@ -78,13 +78,11 @@ resource "aws_lambda_permission" "eventbridge_event_logs_trigger" {
 }
 
 # Attach AWSLambdaBasicExecutionRole policy to the IAM Role
-resource "aws_iam_role_policy_attachment" "lambda_logging_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "lambda_log_events_policy_attachment" {
+  for_each = tomap({
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+    policy_arn = aws_iam_policy.lambda_logs_events_policy.arn
+  })
   role       = aws_iam_role.lambda_logs_events_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
-# Attach custom policy to the IAM Role
-resource "aws_iam_role_policy_attachment" "lambda_custom_policy_attachment" {
-  role       = aws_iam_role.lambda_logs_events_role.name
-  policy_arn = aws_iam_policy.lambda_logs_events_policy.arn
+  policy_arn = each.value
 }
