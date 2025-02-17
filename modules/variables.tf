@@ -33,16 +33,30 @@ variable "project_name" {
   nullable    = true
 }
 
-variable "notification_email" {
+variable "enable_notification_email" {
   description = "User email address notifications"
   type        = string
-  default     = null
+  default     = true
   nullable    = true
+}
+
+variable "enable_notification_phone" {
+  description = "User phone address notifications"
+  type        = string
+  default     = false
+  nullable    = true
+}
+
+variable "notification_email" {
+  description = "User email address notifications"
+  type        = list(string)
+  # default     = null
+  nullable = true
 }
 
 variable "notification_phone" {
   description = "User phone number notifications"
-  type        = string
+  type        = list(string)
   default     = null
   nullable    = true
 }
