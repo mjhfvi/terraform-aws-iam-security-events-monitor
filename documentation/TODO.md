@@ -7,7 +7,8 @@
 - [ ] change resources aws_iam_role to data for usablity
 - [ ] add kms encryption
 - [ ] use backupend provider to backup data
-- [ ] add python code for LLM query url to review event information
-- [ ] add opensearch for logs, it will be used as a RAG db for the LLM
+- [ ] add python code for LLM query to review event information
+- [ ] add python code to build embeddings data process in OpenSearch
+- [ ] add opensearch resource for logs from cloudtrail, it will be used as a RAG db for the LLM
 - [ ] replace python code SNS destination with lambda 'Add destination'
 - [ ] fix 'Directory Structure' in readme.md file
