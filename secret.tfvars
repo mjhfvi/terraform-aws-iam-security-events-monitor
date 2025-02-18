@@ -1,11 +1,10 @@
-## Tzahi Cohen Account - Private AWS Access ##
-aws_access_key     = ""
-aws_secret_key     = ""
-aws_region         = "us-east-1"
-environment        = "" # "AWS Environment (Development, Testing, Staging, Production)"
-project_name       = ""
-owner_name         = ""
-notification_email = ["", ""] # list (optional)
-# notification_phone = ["", ""] # list (optional)
-
-
+aws_access_key               = ""
+aws_secret_key               = ""
+notification_email           = ["", ""] # list
+# enable_notification_email  = true
+# notification_phone         = ["", ""] # list (optional)
+# enable_notification_phone  = false
+# enable_opensearch          = true
+# environment                = ""       # use to tag the resources (Optional), "Use (Testing, Development, Staging, Production)"
+# owner_name                 = "" 		  # use to tag the resources (Optional)
+# project_name               = ""       # use to tag the resources (Optional)
