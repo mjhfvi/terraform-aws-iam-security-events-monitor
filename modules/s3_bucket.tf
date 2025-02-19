@@ -21,7 +21,7 @@ resource "aws_s3_bucket_policy" "cloudtrail_bucket_policy" {
           Service = "cloudtrail.amazonaws.com"
         }
         Action   = "s3:GetBucketAcl"
-        Resource = "${aws_s3_bucket.cloudtrail_events_bucket.arn}"
+        Resource = aws_s3_bucket.cloudtrail_events_bucket.arn
       },
       {
         Sid    = "AWSCloudTrailWrite"
@@ -72,4 +72,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail_bucket_lifecycle" {
       days = 7
     }
   }
+}
+
+resource "random_string" "bucket_suffix" {
+  length  = 6
+  special = false
+  lower   = true
+  numeric = true
 }

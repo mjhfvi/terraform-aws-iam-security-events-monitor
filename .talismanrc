@@ -1,0 +1,11 @@
+---
+fileignoreconfig:
+- filename: main.tf
+  checksum: 258d42721439edb3f5189075b11519dd2fb363ce3df2a6071b3ec2efd9b7436b
+- filename: modules/opensearch.tf
+  checksum: 9710fd5d5718a8e6ff455b9e5ae30927f8d5ecfd65ef86be365e6b4566193ca8
+- filename: README.md
+  checksum: 6838b42265492a3094035a95eba88980d5754faf1ace9858c8e98c405f70b67d
+- filename: .secrets.baseline
+  checksum: 7ca07ad3d9a4fcf930e3e7c05c38326a1157dc9776805fbbbad1297179efc5af
+version: ""

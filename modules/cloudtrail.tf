@@ -48,16 +48,16 @@ resource "aws_iam_role_policy" "cloudtrail_logs_events_log_policy" {
       {
         Effect = "Allow"
         Action = [
-          "*",
+          # "*",
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ]
         Resource = [
-          "*",
-          "${aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn}",
-          "${aws_s3_bucket.cloudtrail_events_bucket.arn}",
-          "${aws_sns_topic.iam_security_alerts.arn}"
+          # "*",
+          aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn,
+          aws_s3_bucket.cloudtrail_events_bucket.arn,
+          aws_sns_topic.iam_security_alerts.arn
         ]
       }
     ]

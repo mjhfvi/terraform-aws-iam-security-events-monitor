@@ -19,10 +19,3 @@ data "archive_file" "iam_event_monitor" {
   source_file = "${path.module}/../lambda/iam_event_monitor.py"
   output_path = "${path.module}/../lambda/iam_event_monitor.zip"
 }
-
-resource "random_string" "bucket_suffix" {
-  length  = 6
-  special = false
-  lower   = true
-  numeric = true
-}

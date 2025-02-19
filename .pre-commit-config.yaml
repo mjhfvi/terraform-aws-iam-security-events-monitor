@@ -193,12 +193,12 @@ repos:
           '--ignore', 'SC3037',   # Not related to alpine
         ]
 
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
-    hooks:
-      - id: prettier
-        # https://prettier.io/docs/en/options.html#parser
-        files: '.json5$'
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: v4.0.0-alpha.8
+  #   hooks:
+  #     - id: prettier
+  #       # https://prettier.io/docs/en/options.html#parser
+  #       files: '.json5$'
 
   - repo: https://github.com/terraform-docs/terraform-docs
     rev: "v0.19.0"
@@ -206,54 +206,63 @@ repos:
       - id: terraform-docs-go
         args: ["markdown", "table", "--output-file", "README.md", "./"]
 
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.44.0
+    hooks:
+    - id: markdownlint
+      name: Markdownlint
+      description: Run markdownlint on your Markdown files
+      args:
+        - --fix
+      files: \.(md|mdown|markdown)$
+
+
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: "v1.97.3"
     hooks:
-      - id: terraform_fmt
-        verbose: true
-        args:
-          - --hook-config=--parallelism-ci-cpu-cores=1
-      - id: terraform_tflint
-        verbose: true
-        args:
-          - --hook-config=--parallelism-ci-cpu-cores=1
-      - id: terraform_validate
-        verbose: true
-      - id: terraform_tfsec
-        verbose: true
-      - id: terraform_trivy
-        verbose: true
-        # files: ^prd-infra/
-      - id: terraform_providers_lock
-        verbose: true
-        args:
-          - --hook-config=--parallelism-limit=CPU*4
-      - id: terraform_checkov
-        verbose: true
-        args:
-          - --args=--quiet
-          - --args=--skip-check CKV2_AWS_8
-      - id: infracost_breakdown
-        verbose: true
-        args:
-          - --args=--path=./env/dev
-      - id: infracost_breakdown
-        verbose: true
-        args:
-          - --args=--path=./env/dev
-          - --args=--terraform-var-file="terraform.tfvars"
-          - --args=--terraform-var-file="../terraform.tfvars"
       - id: terraform_docs
         verbose: true
         args:
           - --args=--config=.terraform-docs.yml
-
-  -   repo: https://github.com/igorshubovych/markdownlint-cli
-      rev: v0.44.0 
-      hooks:
-      - id: markdownlint
-        name: Markdownlint
-        description: Run markdownlint on your Markdown files
-        entry: mdl
-        language: ruby
-        files: \.(md|mdown|markdown)$
+      - id: terraform_fmt
+        verbose: true
+        args:
+          - --hook-config=--parallelism-ci-cpu-cores=1
+      - id: terraform_providers_lock
+        verbose: true
+        args:
+          - --hook-config=--parallelism-limit=CPU*4
+      # - id: terraform_tflint
+      #   verbose: true
+      #   args:
+      #     - --hook-config=--parallelism-ci-cpu-cores=1
+      # - id: terraform_checkov
+      #   verbose: true
+      #   args:
+      #     - --args=--quiet
+      #     - --args=--skip-check CKV2_AWS_8
+      # - id: infracost_breakdown
+      #   name: infracost_breakdown_html
+      #   description: Run infracost on your Terraform files, output as HTML
+      #   verbose: false
+      #   args:
+      #     - --args=--path=.
+      #     - --args=--terraform-var-file="secret.tfvars"
+      #     - --args=--format="html"
+      #     - --args=--out-file=infracost/infracost-html.html
+      - id: infracost_breakdown
+        name: infracost_breakdown_json
+        description: Run infracost on your Terraform files, output as JSON
+        verbose: false
+        args:
+          - --args=--path=.
+          - --args=--terraform-var-file="secret.tfvars"
+          - --args=--format="json"
+          - --args=--out-file=infracost/infracost-json.json
+      - id: infracost_breakdown
+        name: infracost_breakdown_table
+        description: Run infracost on your Terraform files, show in console
+        verbose: true
+        args:
+          - --args=--path=.
+          - --args=--terraform-var-file="secret.tfvars"

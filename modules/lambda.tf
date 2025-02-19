@@ -10,8 +10,10 @@ resource "aws_lambda_function" "iam_event_monitor" {
 
   environment {
     variables = {
-      SNS_TOPIC_ARN = aws_sns_topic.iam_security_alerts.arn
-      LOG_BUCKET    = aws_s3_bucket.cloudtrail_events_bucket.id
+      SNS_TOPIC_ARN       = aws_sns_topic.iam_security_alerts.arn
+      LOG_BUCKET          = aws_s3_bucket.cloudtrail_events_bucket.id
+      BEDROCK_MODEL       = "anthropic.claude-v2"
+      OPENSEARCH_ENDPOINT = var.enable_opensearch != true ? 0 : aws_opensearch_domain.cloudtrail_logs[0].arn
     }
   }
 }
@@ -59,8 +61,8 @@ resource "aws_iam_policy" "lambda_logs_events_policy" {
         Effect = "Allow",
         Resource = [
           # "*",
+          aws_sns_topic.iam_security_alerts.arn,
           "${aws_cloudwatch_log_group.lambda_function_log_group.arn}:*",
-          "${aws_sns_topic.iam_security_alerts.arn}",
           "${aws_s3_bucket.cloudtrail_events_bucket.arn}/*"
         ]
       }

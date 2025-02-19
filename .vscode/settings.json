@@ -46,9 +46,7 @@
   "editor.minimap.enabled": true,
   "editor.minimap.size": "fit",
   "editor.scrollbar.vertical": "auto",
-  "extensions.autoCheckUpdates": true,
   "extensions.autoRestart": true,
-  "extensions.autoUpdate": "onlyEnabledExtensions",
   "extensions.ignoreRecommendations": true,
   "files.autoSave": "onWindowChange",
   "files.enableTrash": true,
@@ -78,7 +76,6 @@
   ],
   "python.defaultInterpreterPath": "./.venv/bin/python",
   "terminal.integrated.automationProfile.linux": null,
-  "window.menuBarVisibility": "toggle",
   "workbench.colorCustomizations": {
     "sideBar.background": "#010d1d",
     "sideBarSectionHeader.foreground": "#ffffff",
