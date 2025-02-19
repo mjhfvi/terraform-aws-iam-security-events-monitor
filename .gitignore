@@ -4,3 +4,4 @@
 terraform.tfstate*
 lambda/iam_event_monitor.zip
 secret.tfvars
+.terraform.tfstate.lock.info

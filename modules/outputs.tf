@@ -39,6 +39,16 @@ output "cloudwatch_log_group_name" {
 }
 
 output "lambda_log_group_retention_in_days" {
-  description = "NUmber of retention days for lambda log group"
+  description = "Number of retention days for lambda log group"
   value       = try(data.aws_cloudwatch_log_group.lambda_function_log_group.retention_in_days, aws_cloudwatch_log_group.lambda_function_log_group.retention_in_days, null)
+}
+
+output "opensearch_domain_name" {
+  description = "opensearch domain name"
+  value       = try(aws_opensearch_domain.cloudtrail_logs[0].domain_name, null)
+}
+
+output "opensearch_url" {
+  description = "opensearch url"
+  value       = try(aws_opensearch_domain.cloudtrail_logs[0].endpoint, null)
 }

@@ -1,35 +1,39 @@
 # Terraform Module to Alert IAM Resources use
+
 ---
-### Table of Contents
 
-  - [AWS Security Monitoring Solution](#aws-security-monitoring-solution)
-  - [Architecture](#architecture)
-  - [Prerequisites](#prerequisites)
-  - [Overall Cost](#overall-cost)
-  - [Directory Structure](#directory-structure)
-    - [CloudWatch](#cloudwatch)
-    - [Lambda](#lambda)
-    - [Provider](#provider)
-    - [S3 bucket](#s3-bucket)
-    - [SNS](#sns)
-    - [Variables](#variables)
-    - [Data](#data)
-    - [Outputs](#outputs)
-  - [Deployment Instructions](#deployment-instructions)
-    - [From Terraform Registry](#from-terraform-registry)
-    - [From Source](#from-source)
-  - [Cleanup](#cleanup)
-  - [Troubleshooting](#troubleshooting)
+## Table of Contents
 
+- [AWS Security Monitoring Solution](#aws-security-monitoring-solution)
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+- [Overall Cost](#overall-cost)
+- [Directory Structure](#directory-structure)
+  - [CloudWatch](#cloudwatch)
+  - [Lambda](#lambda)
+  - [Provider](#provider)
+  - [S3 bucket](#s3-bucket)
+  - [SNS](#sns)
+  - [Variables](#variables)
+  - [Data](#data)
+  - [Outputs](#outputs)
+- [Deployment Instructions](#deployment-instructions)
+  - [From Terraform Registry](#from-terraform-registry)
+  - [From Source](#from-source)
+- [Cleanup](#cleanup)
+- [Troubleshooting](#troubleshooting)
 
 ## AWS Security Monitoring Solution
 
-This solution provides automated security monitoring for your AWS environment using Lambda and EventBridge. 
-It monitors and alerts on critical security events including IAM user creation, access key creation, S3 bucket policy changes, and security group modifications.
+This solution provides automated security monitoring for your AWS environment,
+using Lambda and EventBridge resources, to monitor and alert on
+critical security events including IAM user creation, access key creation,
+S3 bucket policy changes, and security group modifications.
 
 ## Architecture
 
 The solution consists of:
+
 - AWS Lambda function (Python) for processing security events
 - CloudTrail for logging AWS API activity
 - EventBridge(CloudWatch) rules for capturing specific security events
@@ -46,91 +50,128 @@ The solution consists of:
 
 ## Overall Cost
 
-Checked the cost of this solution with [infracost](https://www.infracost.io/), the total estimated monthly cost is 0.00$, S3 bucket is subject to charges as more data is stored to bucket. 
+Checked the cost of this solution with [infracost](https://www.infracost.io/)
+total estimated monthly cost is listed in 'infracost' folder.
 
 ## Directory Structure
 
-```
+```bash
 .
-├── cloudtrail.tf
-├── cloudwatch.tf
-├── data.tf
-├── lambda.tf
-├── outputs.tf
-├── providers.tf
-├── README.md
-├── s3_bucket.tf
-├── secrets.tfvars
-├── sns.tf
-├── variables.tf
-├── lambda
-│   └── lambda_function.py
-|   └── lambda_payload_CreateUser.json
-├── documentation
+├── infracost/
+├── .vscode/
+│   ├── extensions.json
+│   ├── launch.json
+│   ├── tasks.json
+│   └── settings.json
+├── modules/
+│   ├── cloudtrail.tf
+│   ├── cloudwatch.tf
+│   ├── data.tf
+│   ├── lambda.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── s3_bucket.tf
+│   ├── sns.tf
+│   ├── variables.tf
+│   └── opensearch.tf
+├── lambda/
+│   ├── lambda_function.py
+│   └── lambda_payload_CreateUser.json
+├── documentation/
 │   ├── SECURITY.md
 │   ├── TESTING.md
 │   ├── DEBUGGING.md
 │   ├── LIMITATIONS.md
 │   ├── TODO.md
 │   └── TOOLS.md
+├── .gitignore
+├── .pre-commit-config.yaml
+├── main.tf
+├── README.md
+├── secrets.tfvars
+├── variables.tf
+
 ```
+
 ### CloudWatch
-cloudwatch_event_rule.tf = Build CloudWatch Event Rules
-cloudwatch_event_target.tf = Build CloudWatch Event Targets
-cloudwatch_evet_lambda_premission.tf = Build CloudWatch Event Lambda Permission
+
+cloudwatch.tf = Build CloudWatch resource
 
 ### Lambda
+
 lambda_function.py = Lambda Function
 lambda_function.tf = Build Lambda Function in AWS
-lambda_function.zip = lambda_function.py used for lambda function
-lambda_role.tf = Lambda Role
+lambda_function.zip = lambda function zip (after running terraform plan)
 
 ### Provider
+
 providers.tf = Provider information for the project
 
 ### S3 bucket
+
 s3_bucket.tf = S3 Bucket configuration
 
 ### SNS
+
 sns.tf = SNS Topic configuration
 
 ### Variables
+
 variables.tf = Variables for the project resources
 
 ### Data
+
 data.tf = Data information for the resources
 
-### Outputs
-outputs.tf = Output project information for the user
+### OpenSearch
+
+opensearch = OpenSearch configuration
 
 ## Deployment Instructions
 
 ### From Terraform Registry
-1. Update variables in `variables.tf` if needed 
+
+1. Update variables in `variables.tf` if needed
 2. add main.tf
-```
-module "iam-security-events-monitor" {
-  source             = "mjhfvi/iam-security-events-monitor/aws"
-  version            = "0.1.1"
-  aws_access_key     = var.aws_access_key
-  aws_secret_key     = var.aws_secret_key
-  environment        = var.environment
-  owner_name         = var.owner_name
-  project_name       = var.project_name
-  notification_email = var.notification_email
-  notification_phone = var.notification_phone
+
+```json
+module "iam_security_events" {
+  source                              = "./modules/"
+  aws_access_key                      = var.aws_access_key
+  aws_secret_key                      = var.aws_secret_key
+  environment                         = var.environment
+  project_owner                       = var.project_owner
+  project_name                        = var.project_name
+  enable_notification_email           = var.enable_notification_email
+  notification_email                  = var.notification_email
+  enable_notification_phone           = var.enable_notification_phone
+  notification_phone                  = var.notification_phone
+  enable_opensearch                   = var.enable_opensearch
+  aws_opensearch_domain_instance_type = var.aws_opensearch_domain_instance_type
+  cloudwatch_log_retention_days       = var.cloudwatch_log_retention_days
+  lambda_function_log_retention_days  = var.lambda_function_log_retention_days
+  lambda_function_timeout             = var.lambda_function_timeout
+  opensearch_master_user_name         = var.opensearch_master_user_name
+  opensearch_master_user_password     = var.opensearch_master_user_password
+  opensearch_ebs_volume_size          = var.opensearch_ebs_volume_size
 }
 ```
+
 1. Update variables in `secret.tfvars` if needed
 2. Initialize Terraform:
+
    ```bash
    terraform init
    ```
+
 3. Review the planned changes:
+
    ```bash
    terraform plan -var-file="secret.tfvars" -out=plan-out
    ```
+
 4. Apply the configuration:
+
    ```bash
    terraform apply "plan-out"
    ```
@@ -138,54 +179,124 @@ module "iam-security-events-monitor" {
 ### From Source
 
 1. Clone this repository
-2. Update variables in `variables.tf` if needed 
+2. Update variables in `variables.tf` if needed
 3. Update variables in `secret.tfvars` if needed
 4. Initialize Terraform:
+
    ```bash
    terraform init
    ```
+
 5. Review the planned changes:
+
    ```bash
    terraform plan -var-file="secret.tfvars" -out=plan-out
    ```
+
 6. Apply the configuration:
+
    ```bash
    terraform apply "plan-out"
    ```
+
 7. Subscribe to the SNS topic (the ARN will be in the Terraform outputs)
 
 ## Cleanup
 
 To remove all created resources:
+
 ```bash
 terraform destroy -var-file="secret.tfvars" -auto-approve
 ```
+
 ### Post Setup
-- approve the email from AWS "AWS Notification - Subscription Confirmation" by clicking the link in the email `SubscribeURL`
+
+- approve the email from AWS "AWS Notification - Subscription Confirmation"
+  by clicking the link in the email `SubscribeURL`
 
 ## Troubleshooting
 
 Common issues and solutions:
-TBD
+creating or destroying OpenSearch resource could take up to 20m
 
+## Documentation
+
+---
 
 ## Terraform Documentation
+
 [Terraform Documentation](./documentation/TERRAFORM.md)
 
 ## Security Documentation
+
 [Security Documentation](./documentation/SECURITY.md)
 
 ## Testing Documentation
+
 [Testing Documentation](./documentation/TESTING.md)
 
 ## Debugging Documentation
+
 [Debugging Documentation](./documentation/DEBUGGING.md)
 
 ## Limitations Documentation
+
 [Limitations Documentation](./documentation/LIMITATIONS.md)
 
 ## Todo Documentation
+
 [Todo Documentation](./documentation/TODO.md)
 
 ## Tools Documentation
+
 [Tools Documentation](./documentation/TOOLS.md)
+
+## Terraform Modules Breakdown
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 5.86.0 |
+
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_iam_security_events"></a> [iam\_security\_events](#module\_iam\_security\_events) | ./modules/ | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access\_key to use for the server | `string` | n/a | yes |
+| <a name="input_aws_opensearch_domain_instance_type"></a> [aws\_opensearch\_domain\_instance\_type](#input\_aws\_opensearch\_domain\_instance\_type) | aws opensearch domain instance type | `string` | `"t3.small.search"` | no |
+| <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret\_key to use for the server | `string` | n/a | yes |
+| <a name="input_cloudwatch_log_retention_days"></a> [cloudwatch\_log\_retention\_days](#input\_cloudwatch\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `14` | no |
+| <a name="input_enable_notification_email"></a> [enable\_notification\_email](#input\_enable\_notification\_email) | User email address notifications | `bool` | `true` | no |
+| <a name="input_enable_notification_phone"></a> [enable\_notification\_phone](#input\_enable\_notification\_phone) | User phone address notifications | `bool` | `false` | no |
+| <a name="input_enable_opensearch"></a> [enable\_opensearch](#input\_enable\_opensearch) | Enable OpenSearch for monitoring logs from CloudTrail | `bool` | `false` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | AWS Environment (Development, Testing, Staging, Production) | `string` | `"Testing"` | no |
+| <a name="input_lambda_function_log_retention_days"></a> [lambda\_function\_log\_retention\_days](#input\_lambda\_function\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `7` | no |
+| <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | lambda function timeout | `number` | `30` | no |
+| <a name="input_notification_email"></a> [notification\_email](#input\_notification\_email) | User email address notifications | `list(string)` | `[]` | no |
+| <a name="input_notification_phone"></a> [notification\_phone](#input\_notification\_phone) | User phone number notifications | `list(string)` | `[]` | no |
+| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Set opensearch user name login password | `number` | `10` | no |
+| <a name="input_opensearch_master_user_name"></a> [opensearch\_master\_user\_name](#input\_opensearch\_master\_user\_name) | Set opensearch user name login | `string` | `"admin"` | no |
+| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Set opensearch user name login password | `string` | `"admin"` | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | set the tag for name of the project | `string` | `null` | no |
+| <a name="input_project_owner"></a> [project\_owner](#input\_project\_owner) | set the tag for environment project owner name, a person or a depatment | `string` | `null` | no |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
