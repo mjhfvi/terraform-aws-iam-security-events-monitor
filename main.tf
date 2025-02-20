@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 5.86.0"
+  required_version = ">= 1.10.5"
 }
 
 module "iam_security_events" {

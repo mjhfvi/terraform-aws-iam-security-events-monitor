@@ -3,12 +3,13 @@ resource "aws_cloudtrail" "cloudtrail_iam_events" {
   name                          = "cloudtrail-iam-events-trail"
   s3_bucket_name                = aws_s3_bucket.cloudtrail_events_bucket.id
   include_global_service_events = true
-  enable_log_file_validation    = false
+  enable_log_file_validation    = true
   is_organization_trail         = true # set to true to get events from all accounts
   is_multi_region_trail         = true # set to true to get events from all regions
   enable_logging                = true
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn}:*" # CloudTrail requires the Log Stream wildcardaws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn
   cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_logs_events_role.arn
+  sns_topic_name                = aws_sns_topic.iam_security_alerts.name
 
   depends_on = [aws_s3_bucket_policy.cloudtrail_bucket_policy]
 }

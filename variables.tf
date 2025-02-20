@@ -12,13 +12,6 @@ variable "aws_secret_key" {
   nullable    = false
 }
 
-# variable "aws_region" {
-#   description = "AWS region"
-#   type        = string
-#   default     = "us-east-1"
-#   nullable    = false
-# }
-
 variable "project_owner" {
   description = "set the tag for environment project owner name, a person or a depatment"
   type        = string
@@ -32,27 +25,6 @@ variable "project_name" {
   default     = null
   nullable    = true
 }
-
-# variable "provisioned_with" {
-#   description = "provisioned resource with tool name (terraform)"
-#   type        = string
-#   default     = "Terraform"
-#   nullable    = false
-# }
-
-# variable "enable_notification_email" {
-#   description = "User email address notifications"
-#   type        = string
-#   default     = false
-#   nullable    = true
-# }
-
-# variable "enable_notification_phone" {
-#   description = "User phone address notifications"
-#   type        = string
-#   default     = false
-#   nullable    = true
-# }
 
 variable "notification_email" {
   description = "User email address notifications"

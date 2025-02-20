@@ -1,6 +1,6 @@
-aws_access_key                         = ""
-aws_secret_key                         = ""
-notification_email                     = ["", ""] # list
+aws_access_key     = ""
+aws_secret_key     = ""
+notification_email = ["", ""] # list
 # enable_notification_email            = true # default(false)
 # notification_phone                   = ["", ""] # list (optional)
 # enable_notification_phone            = false # default(false)

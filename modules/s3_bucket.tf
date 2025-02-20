@@ -65,6 +65,13 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail_bucket_lifecycle" {
   bucket = aws_s3_bucket.cloudtrail_events_bucket.id
 
   rule {
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+
+    filter {}
+
     id     = "cleanup_old_logs"
     status = "Enabled"
 
