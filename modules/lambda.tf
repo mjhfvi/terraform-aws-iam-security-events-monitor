@@ -1,12 +1,17 @@
 # Lambda Function
 resource "aws_lambda_function" "iam_event_monitor" {
-  description   = "lambda function to monitor security events"
-  filename      = data.archive_file.iam_event_monitor.output_path
-  function_name = "iam_event_monitor"
-  role          = aws_iam_role.lambda_logs_events_role.arn
-  handler       = "iam_event_monitor.lambda_handler"
-  runtime       = var.lambda_runtime
-  timeout       = var.lambda_function_timeout
+  description                    = "lambda function to monitor security events"
+  filename                       = data.archive_file.iam_event_monitor.output_path
+  function_name                  = "iam_event_monitor"
+  role                           = aws_iam_role.lambda_logs_events_role.arn
+  handler                        = "iam_event_monitor.lambda_handler"
+  runtime                        = var.lambda_runtime
+  timeout                        = var.lambda_function_timeout
+  reserved_concurrent_executions = 10 # Set the maximum number of concurrent executions (Testing only)
+
+  tracing_config {
+    mode = "Active"
+  }
 
   environment {
     variables = {

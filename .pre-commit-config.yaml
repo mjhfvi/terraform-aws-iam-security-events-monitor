@@ -68,7 +68,7 @@ repos:
         name: setup-cfg-fmt (apply a consistent format to setup.cfg files)
 
   - repo: https://github.com/crate-ci/typos
-    rev: typos-dict-v0.12.5
+    rev: v1.29.8
     hooks:
       - id: typos
         name: typos (Finds and corrects spelling mistakes)
@@ -130,7 +130,7 @@ repos:
         exclude: gitleaks-report.json|charts/|helm-template-example/
 
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.23.3
+    rev: v8.24.0
     hooks:
       - id: gitleaks
         name: gitleaks
@@ -204,7 +204,10 @@ repos:
     rev: "v0.19.0"
     hooks:
       - id: terraform-docs-go
-        args: ["markdown", "table", "--output-file", "README.md", "./"]
+        name: terraform-docs-go
+        verbose: true
+        description: Generate documentation from Terraform modules in various output formats
+        args: ["markdown", "table", ".", "--output-file", "README.md"]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.44.0
@@ -216,7 +219,6 @@ repos:
         - --fix
       files: \.(md|mdown|markdown)$
 
-
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: "v1.97.3"
     hooks:
@@ -225,22 +227,27 @@ repos:
         args:
           - --args=--config=.terraform-docs.yml
       - id: terraform_fmt
+        name: terraform_fmt
+        description: rewrite Terraform configuration files to a canonical format and style
         verbose: true
-        args:
-          - --hook-config=--parallelism-ci-cpu-cores=1
+        # exclude: secret.tfvars
+        # args:
+        #   - --hook-config=--parallelism-ci-cpu-cores=1
       - id: terraform_providers_lock
         verbose: true
+        # args:
+        #   - --hook-config=--parallelism-limit=CPU*4
+      - id: terraform_tflint
+        verbose: true
         args:
-          - --hook-config=--parallelism-limit=CPU*4
-      # - id: terraform_tflint
-      #   verbose: true
-      #   args:
-      #     - --hook-config=--parallelism-ci-cpu-cores=1
+          # - --args=--fix
+          - --args=--config=.tflint.hcl
+          - --args=--minimum-failure-severity=notice
       # - id: terraform_checkov
       #   verbose: true
       #   args:
       #     - --args=--quiet
-      #     - --args=--skip-check CKV2_AWS_8
+      #     - --args=--skip-check=CKV_AWS_26,CKV_AWS_338,CKV_AWS_117,CKV_AWS_35,CKV_AWS_158,CKV_AWS_173,CKV_AWS_272,CKV_AWS_35,CKV_AWS_158,CKV_AWS_116
       # - id: infracost_breakdown
       #   name: infracost_breakdown_html
       #   description: Run infracost on your Terraform files, output as HTML
