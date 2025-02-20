@@ -219,6 +219,13 @@ repos:
         - --fix
       files: \.(md|mdown|markdown)$
 
+  - repo: local
+    hooks:
+      - id: infracost_breakdown_html
+        name: infracost_breakdown_html
+        entry: bash -c 'infracost breakdown --path=. --terraform-var-file=secret.tfvars --out-file=infracost/infracost-html.html --format=html'
+        language: system
+
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: "v1.97.3"
     hooks:
@@ -243,20 +250,11 @@ repos:
           # - --args=--fix
           - --args=--config=.tflint.hcl
           - --args=--minimum-failure-severity=notice
-      # - id: terraform_checkov
-      #   verbose: true
-      #   args:
-      #     - --args=--quiet
-      #     - --args=--skip-check=CKV_AWS_26,CKV_AWS_338,CKV_AWS_117,CKV_AWS_35,CKV_AWS_158,CKV_AWS_173,CKV_AWS_272,CKV_AWS_35,CKV_AWS_158,CKV_AWS_116
-      # - id: infracost_breakdown
-      #   name: infracost_breakdown_html
-      #   description: Run infracost on your Terraform files, output as HTML
-      #   verbose: false
-      #   args:
-      #     - --args=--path=.
-      #     - --args=--terraform-var-file="secret.tfvars"
-      #     - --args=--format="html"
-      #     - --args=--out-file=infracost/infracost-html.html
+      - id: terraform_checkov
+        verbose: true
+        args:
+          - --args=--quiet
+          - --args=--skip-check=CKV_AWS_26,CKV_AWS_338,CKV_AWS_117,CKV_AWS_35,CKV_AWS_158,CKV_AWS_173,CKV_AWS_272,CKV_AWS_35,CKV_AWS_158,CKV_AWS_116,CKV_AWS_115,CKV_AWS_50
       - id: infracost_breakdown
         name: infracost_breakdown_json
         description: Run infracost on your Terraform files, output as JSON
