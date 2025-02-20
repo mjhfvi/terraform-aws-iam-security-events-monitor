@@ -43,12 +43,12 @@ output "lambda_log_group_retention_in_days" {
   value       = try(module.iam_security_events.lambda_log_group_retention_in_days, null)
 }
 
-output "opensearch_domain_name" {
-  description = "opensearch domain name"
-  value       = try(module.iam_security_events.opensearch_domain_name, null)
-}
+# output "opensearch_domain_name" {
+#   description = "opensearch domain name"
+#   value       = try(module.iam_security_events.opensearch_domain_name, null)
+# }
 
-output "opensearch_url" {
-  description = "opensearch url"
-  value       = try(module.iam_security_events.opensearch_url, null)
-}
+# output "opensearch_url" {
+#   description = "opensearch url"
+#   value       = try(module.iam_security_events.opensearch_url, null)
+# }

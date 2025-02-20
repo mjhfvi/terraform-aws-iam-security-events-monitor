@@ -24,6 +24,6 @@ data "aws_s3_bucket" "cloudtrail_events_bucket" {
   bucket = aws_s3_bucket.cloudtrail_events_bucket.id
 }
 
-data "aws_opensearch_domain" "cloudtrail_logs" {
-  domain_name = aws_opensearch_domain.cloudtrail_logs[0].domain_name
-}
+# data "aws_opensearch_domain" "cloudtrail_logs" {
+#   domain_name = aws_opensearch_domain.cloudtrail_logs[count.index]
+# }

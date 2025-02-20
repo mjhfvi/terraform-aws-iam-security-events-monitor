@@ -48,12 +48,12 @@ output "lambda_log_group_retention_in_days" {
   value       = try(aws_cloudwatch_log_group.lambda_function_log_group.retention_in_days, data.aws_cloudwatch_log_group.lambda_function_log_group.retention_in_days, null)
 }
 
-output "opensearch_domain_name" {
-  description = "opensearch domain name"
-  value       = try(data.aws_opensearch_domain.cloudtrail_logs.domain_name, null)
-}
+# output "opensearch_domain_name" {
+#   description = "opensearch domain name"
+#   value       = try(data.aws_opensearch_domain.cloudtrail_logs.domain_name, null)
+# }
 
-output "opensearch_url" {
-  description = "opensearch url"
-  value       = try(data.aws_opensearch_domain.cloudtrail_logs.endpoint, null)
-}
+# output "opensearch_url" {
+#   description = "opensearch url"
+#   value       = try(aws_opensearch_domain.cloudtrail_logs[count.index].endpoint, null)
+# }

@@ -305,8 +305,6 @@ No resources.
 | <a name="output_iam_management"></a> [iam\_management](#output\_iam\_management) | Identity and Access Management |
 | <a name="output_lambda_function_name"></a> [lambda\_function\_name](#output\_lambda\_function\_name) | Lambda function name |
 | <a name="output_lambda_log_group_retention_in_days"></a> [lambda\_log\_group\_retention\_in\_days](#output\_lambda\_log\_group\_retention\_in\_days) | Number of retention days for lambda log group |
-| <a name="output_opensearch_domain_name"></a> [opensearch\_domain\_name](#output\_opensearch\_domain\_name) | opensearch domain name |
-| <a name="output_opensearch_url"></a> [opensearch\_url](#output\_opensearch\_url) | opensearch url |
 | <a name="output_s3_bucket_domain_name"></a> [s3\_bucket\_domain\_name](#output\_s3\_bucket\_domain\_name) | Domain name of the S3 bucket for logs |
 | <a name="output_s3_bucket_id"></a> [s3\_bucket\_id](#output\_s3\_bucket\_id) | Id of the S3 bucket for logs |
 | <a name="output_s3_bucket_name"></a> [s3\_bucket\_name](#output\_s3\_bucket\_name) | Name of the S3 bucket for logs |
