@@ -21,5 +21,8 @@ module "iam_security_events" {
   opensearch_master_user_name         = var.opensearch_master_user_name
   opensearch_master_user_password     = var.opensearch_master_user_password
   opensearch_ebs_volume_size          = var.opensearch_ebs_volume_size
+  enable_user_actions                 = var.enable_user_actions
+  enable_group_actions                = var.enable_group_actions
+  enable_user_accesskey_actions       = var.enable_user_accesskey_actions
 
 }

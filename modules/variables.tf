@@ -38,12 +38,12 @@ variable "provisioned_with" {
 }
 
 variable "enable_notification_email" {
-  description = "enable/disable user email address notifications for SNS topic"
+  description = "Enable/Disable user email address notifications for SNS topic"
   type        = bool
 }
 
 variable "enable_notification_phone" {
-  description = "enable/disable phone address address notifications for SNS topic"
+  description = "Enable/Disable phone address address notifications for SNS topic"
   type        = bool
 }
 
@@ -85,7 +85,7 @@ variable "aws_opensearch_domain_instance_type" {
 }
 
 variable "enable_opensearch" {
-  description = "Enable OpenSearch for monitoring logs from CloudTrail"
+  description = "Enable/Disable OpenSearch for monitoring logs from CloudTrail"
   type        = bool
 }
 
@@ -105,16 +105,16 @@ variable "opensearch_ebs_volume_size" {
 }
 
 variable "enable_user_actions" {
-  description = "enable user actions lambda function for cloudwatch events rule"
+  description = "Enable/Disable user actions lambda function for cloudwatch events rule"
   type        = bool
 }
 
 variable "enable_group_actions" {
-  description = "enable group actions lambda function for cloudwatch events rule"
+  description = "Enable/Disable group actions lambda function for cloudwatch events rule"
   type        = bool
 }
 
 variable "enable_user_accesskey_actions" {
-  description = "enable user accesskey actions lambda function for cloudwatch events rule"
+  description = "Enable/Disable user accesskey actions lambda function for cloudwatch events rule"
   type        = bool
 }

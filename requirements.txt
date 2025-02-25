@@ -1,0 +1,13 @@
+annotated-types
+diagrams
+flake8
+isort
+pep8
+pylint
+ruyaml
+setuptools
+talisman
+toml
+typing_extensions
+virtualenv
+yamlfix
