@@ -1,7 +1,7 @@
 # S3 Bucket for CloudTrail logs
 resource "aws_s3_bucket" "cloudtrail_events_bucket" {
-  bucket = lower("cloudtrail-events-bucket-${var.environment}-${random_string.bucket_suffix.result}")
-  # force_destroy = true
+  bucket        = lower("cloudtrail-events-bucket-${var.environment}-${random_string.bucket_suffix.result}")
+  force_destroy = var.environment == "Testing" ? true : false
 
   timeouts {
     create = "5m"
@@ -82,8 +82,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail_bucket_lifecycle" {
 }
 
 resource "random_string" "bucket_suffix" {
-  length  = 6
-  special = false
-  lower   = true
-  numeric = true
+  length      = 8
+  special     = false
+  lower       = true
+  numeric     = true
+  min_lower   = 3
+  min_numeric = 3
+  min_upper   = 2
 }

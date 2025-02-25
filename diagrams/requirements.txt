@@ -1,0 +1,6 @@
+diagrams
+flake8
+isort
+pep8
+pylint
+virtualenv

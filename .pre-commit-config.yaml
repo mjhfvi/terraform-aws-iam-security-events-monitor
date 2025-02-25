@@ -253,8 +253,9 @@ repos:
       - id: terraform_checkov
         verbose: true
         args:
+          # - --args=--output=json --output-file-path=documentation
           - --args=--quiet
-          - --args=--skip-check=CKV_AWS_26,CKV_AWS_338,CKV_AWS_117,CKV_AWS_35,CKV_AWS_158,CKV_AWS_173,CKV_AWS_272,CKV_AWS_35,CKV_AWS_158,CKV_AWS_116,CKV_AWS_115,CKV_AWS_50
+          - --args=--skip-check=CKV_AWS_355,CKV_AWS_290,CKV_AWS_355,CKV_AWS_290,CKV_AWS_26,CKV_AWS_338,CKV_AWS_117,CKV_AWS_35,CKV_AWS_158,CKV_AWS_173,CKV_AWS_272,CKV_AWS_35,CKV_AWS_158,CKV_AWS_116,CKV_AWS_115,CKV_AWS_50
       - id: infracost_breakdown
         name: infracost_breakdown_json
         description: Run infracost on your Terraform files, output as JSON

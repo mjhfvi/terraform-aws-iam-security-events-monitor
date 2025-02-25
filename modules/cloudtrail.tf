@@ -11,7 +11,10 @@ resource "aws_cloudtrail" "cloudtrail_iam_events" {
   cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_logs_events_role.arn
   sns_topic_name                = aws_sns_topic.iam_security_alerts.name
 
-  depends_on = [aws_s3_bucket_policy.cloudtrail_bucket_policy]
+  depends_on = [
+    aws_s3_bucket_policy.cloudtrail_bucket_policy,
+    aws_sns_topic_policy.cloudtrail_sns_policy
+  ]
 }
 
 # CloudWatch Logs for cloudtrail
@@ -52,10 +55,11 @@ resource "aws_iam_role_policy" "cloudtrail_logs_events_log_policy" {
           # "*",
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
-          "logs:PutLogEvents"
+          "logs:PutLogEvents",
+          "sns:Publish",
         ]
         Resource = [
-          # "*",
+          "*",
           aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn,
           aws_s3_bucket.cloudtrail_events_bucket.arn,
           aws_sns_topic.iam_security_alerts.arn

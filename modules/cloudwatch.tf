@@ -1,24 +1,14 @@
 # CloudWatch Event Rules for cloudtrail logs
 resource "aws_cloudwatch_event_rule" "lambda_cloudwatch_events_rule" {
   name        = "lambda-cloudwatch-events-rule"
-  description = "Capture cloudwatch iam events for lambda"
+  description = "Capture CloudWatch IAM Events for Lambda"
 
   event_pattern = jsonencode({
     source      = ["aws.iam"]
     detail-type = ["AWS API Call via CloudTrail"]
     detail = {
       eventSource = ["iam.amazonaws.com"]
-      eventName = [
-        "CreateUser",
-        "UpdateUser",
-        "DeleteUser",
-        "CreateGroup",
-        "UpdateGroup",
-        "DeleteGroup",
-        "CreateAccessKey",
-        "DeleteAccessKey",
-        "ListGroupsForUser",
-      ]
+      eventName   = [local.all_actions_string]
     }
   })
 }
@@ -46,4 +36,28 @@ resource "aws_cloudwatch_event_target" "lambda_cloudwatch_event_target" {
   rule      = aws_cloudwatch_event_rule.lambda_cloudwatch_events_rule.name
   target_id = "SecurityMonitorLambda"
   arn       = aws_lambda_function.iam_event_monitor.arn
+}
+
+# Local variables to manage actions
+locals {
+  user_actions = var.enable_user_actions ? [
+    "CreateUser",
+    "UpdateUser",
+    "DeleteUser"
+  ] : []
+
+  group_actions = var.enable_group_actions ? [
+    "CreateGroup",
+    "UpdateGroup",
+    "DeleteGroup"
+  ] : []
+
+  user_accesskey_actions = var.enable_user_accesskey_actions ? [
+    "CreateAccessKey",
+    "DeleteAccessKey"
+  ] : []
+
+  # Combine all actions
+  all_actions        = concat(local.user_actions, local.user_accesskey_actions, local.group_actions)
+  all_actions_string = join(", ", local.all_actions)
 }

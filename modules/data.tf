@@ -16,14 +16,21 @@ data "aws_lambda_function" "iam_event_monitor" {
 
 data "archive_file" "iam_event_monitor" {
   type        = "zip"
-  source_file = "${path.module}/../lambda/iam_event_monitor.py"
-  output_path = "${path.module}/../lambda/iam_event_monitor.zip"
+  source_file = "${path.module}/../function/iam_event_monitor.py"
+  output_path = "${path.module}/../function/iam_event_monitor.zip"
 }
+
+# data "archive_file" "rag_db_query" {
+#   type        = "zip"
+#   source_file = "${path.module}/../function/rag_db_query.py"
+#   output_path = "${path.module}/../function/rag_db_query.zip"
+# }
 
 data "aws_s3_bucket" "cloudtrail_events_bucket" {
   bucket = aws_s3_bucket.cloudtrail_events_bucket.id
 }
 
-# data "aws_opensearch_domain" "cloudtrail_logs" {
-#   domain_name = aws_opensearch_domain.cloudtrail_logs[count.index]
-# }
+data "aws_opensearch_domain" "cloudtrail_logs" {
+  count       = var.enable_opensearch ? 1 : 0
+  domain_name = var.enable_opensearch ? aws_opensearch_domain.cloudtrail_logs[count.index].domain_name : null
+}

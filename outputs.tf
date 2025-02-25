@@ -33,22 +33,22 @@ output "lambda_function_name" {
   value       = try(module.iam_security_events.lambda_function_name, null)
 }
 
-output "cloudwatch_log_group_name" {
-  description = "Name of the CloudWatch Log Group"
-  value       = try(module.iam_security_events.cloudwatch_log_group_name, null)
-}
-
 output "lambda_log_group_retention_in_days" {
   description = "Number of retention days for lambda log group"
   value       = try(module.iam_security_events.lambda_log_group_retention_in_days, null)
 }
 
-# output "opensearch_domain_name" {
-#   description = "opensearch domain name"
-#   value       = try(module.iam_security_events.opensearch_domain_name, null)
-# }
+output "cloudwatch_log_group_name" {
+  description = "Name of the CloudWatch Log Group"
+  value       = try(module.iam_security_events.cloudwatch_log_group_name, null)
+}
 
-# output "opensearch_url" {
-#   description = "opensearch url"
-#   value       = try(module.iam_security_events.opensearch_url, null)
-# }
+output "opensearch_domain_name" {
+  description = "opensearch domain name"
+  value       = try(module.iam_security_events.opensearch_domain_name, null)
+}
+
+output "opensearch_url" {
+  description = "opensearch url"
+  value       = try(module.iam_security_events.opensearch_url, null)
+}
