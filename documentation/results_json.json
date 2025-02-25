@@ -1,0 +1,1735 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_LOGGING_7",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "sns_topic_name": [
+            {
+              "module_connection": false,
+              "name": "aws_sns_topic.iam_security_alerts",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/sns.tf",
+              "type": "resource"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.CloudtrailEncryptionWithCMK",
+        "check_id": "CKV_AWS_35",
+        "check_len": null,
+        "check_name": "Ensure CloudTrail logs are encrypted at rest using KMS CMKs",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_cloudtrail\" \"cloudtrail_iam_events\" {\n"
+          ],
+          [
+            3,
+            "  name                          = \"cloudtrail-iam-events-trail\"\n"
+          ],
+          [
+            4,
+            "  s3_bucket_name                = aws_s3_bucket.cloudtrail_events_bucket.id\n"
+          ],
+          [
+            5,
+            "  include_global_service_events = true\n"
+          ],
+          [
+            6,
+            "  enable_log_file_validation    = true\n"
+          ],
+          [
+            7,
+            "  is_organization_trail         = true # set to true to get events from all accounts\n"
+          ],
+          [
+            8,
+            "  is_multi_region_trail         = true # set to true to get events from all regions\n"
+          ],
+          [
+            9,
+            "  enable_logging                = true\n"
+          ],
+          [
+            10,
+            "  cloud_watch_logs_group_arn    = \"${aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn}:*\" # CloudTrail requires the Log Stream wildcardaws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn\n"
+          ],
+          [
+            11,
+            "  cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_logs_events_role.arn\n"
+          ],
+          [
+            12,
+            "  sns_topic_name                = aws_sns_topic.iam_security_alerts.name\n"
+          ],
+          [
+            13,
+            "\n"
+          ],
+          [
+            14,
+            "  depends_on = [\n"
+          ],
+          [
+            15,
+            "    aws_s3_bucket_policy.cloudtrail_bucket_policy,\n"
+          ],
+          [
+            16,
+            "    aws_sns_topic_policy.cloudtrail_sns_policy\n"
+          ],
+          [
+            17,
+            "  ]\n"
+          ],
+          [
+            18,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "file_line_range": [
+          2,
+          18
+        ],
+        "file_path": "/modules/cloudtrail.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/logging-7",
+        "repo_file_path": "/modules/cloudtrail.tf",
+        "resource": "module.iam_security_events.aws_cloudtrail.cloudtrail_iam_events",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_GENERAL_85",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "retention_in_days": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "cloudwatch_log_retention_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.CloudWatchLogGroupKMSKey",
+        "check_id": "CKV_AWS_158",
+        "check_len": null,
+        "check_name": "Ensure that CloudWatch Log Group is encrypted by KMS",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            21,
+            "resource \"aws_cloudwatch_log_group\" \"cloudtrail_logs_events_log_group\" {\n"
+          ],
+          [
+            22,
+            "  name              = \"/aws/cloudtrail/cloudtrail-logs-events\"\n"
+          ],
+          [
+            23,
+            "  retention_in_days = var.cloudwatch_log_retention_days\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "file_line_range": [
+          21,
+          24
+        ],
+        "file_path": "/modules/cloudtrail.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-cloudwatch-log-group-is-encrypted-by-kms",
+        "repo_file_path": "/modules/cloudtrail.tf",
+        "resource": "module.iam_security_events.aws_cloudwatch_log_group.cloudtrail_logs_events_log_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_LOGGING_46",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "retention_in_days": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "cloudwatch_log_retention_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.CloudWatchLogGroupRetentionYear",
+        "check_id": "CKV_AWS_338",
+        "check_len": null,
+        "check_name": "Ensure CloudWatch log groups retains logs for at least 1 year",
+        "check_result": {
+          "evaluated_keys": [
+            "retention_in_days"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            21,
+            "resource \"aws_cloudwatch_log_group\" \"cloudtrail_logs_events_log_group\" {\n"
+          ],
+          [
+            22,
+            "  name              = \"/aws/cloudtrail/cloudtrail-logs-events\"\n"
+          ],
+          [
+            23,
+            "  retention_in_days = var.cloudwatch_log_retention_days\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "file_line_range": [
+          21,
+          24
+        ],
+        "file_path": "/modules/cloudtrail.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-338",
+        "repo_file_path": "/modules/cloudtrail.tf",
+        "resource": "module.iam_security_events.aws_cloudwatch_log_group.cloudtrail_logs_events_log_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_IAM_85",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.IAMWriteAccess",
+        "check_id": "CKV_AWS_290",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow write access without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            45,
+            "resource \"aws_iam_role_policy\" \"cloudtrail_logs_events_log_policy\" {\n"
+          ],
+          [
+            46,
+            "  name = \"cloudtrail-logs-events-log-policy\"\n"
+          ],
+          [
+            47,
+            "  role = aws_iam_role.cloudtrail_logs_events_role.id\n"
+          ],
+          [
+            48,
+            "\n"
+          ],
+          [
+            49,
+            "  policy = jsonencode({\n"
+          ],
+          [
+            50,
+            "    Version = \"2012-10-17\"\n"
+          ],
+          [
+            51,
+            "    Statement = [\n"
+          ],
+          [
+            52,
+            "      {\n"
+          ],
+          [
+            53,
+            "        Effect = \"Allow\"\n"
+          ],
+          [
+            54,
+            "        Action = [\n"
+          ],
+          [
+            55,
+            "          # \"*\",\n"
+          ],
+          [
+            56,
+            "          \"logs:CreateLogGroup\",\n"
+          ],
+          [
+            57,
+            "          \"logs:CreateLogStream\",\n"
+          ],
+          [
+            58,
+            "          \"logs:PutLogEvents\",\n"
+          ],
+          [
+            59,
+            "          \"sns:Publish\",\n"
+          ],
+          [
+            60,
+            "        ]\n"
+          ],
+          [
+            61,
+            "        Resource = [\n"
+          ],
+          [
+            62,
+            "          \"*\",\n"
+          ],
+          [
+            63,
+            "          aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn,\n"
+          ],
+          [
+            64,
+            "          aws_s3_bucket.cloudtrail_events_bucket.arn,\n"
+          ],
+          [
+            65,
+            "          aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            66,
+            "        ]\n"
+          ],
+          [
+            67,
+            "      }\n"
+          ],
+          [
+            68,
+            "    ]\n"
+          ],
+          [
+            69,
+            "  })\n"
+          ],
+          [
+            70,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "file_line_range": [
+          45,
+          70
+        ],
+        "file_path": "/modules/cloudtrail.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-290",
+        "repo_file_path": "/modules/cloudtrail.tf",
+        "resource": "module.iam_security_events.aws_iam_role_policy.cloudtrail_logs_events_log_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_IAM_88",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+        "check_id": "CKV_AWS_355",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            45,
+            "resource \"aws_iam_role_policy\" \"cloudtrail_logs_events_log_policy\" {\n"
+          ],
+          [
+            46,
+            "  name = \"cloudtrail-logs-events-log-policy\"\n"
+          ],
+          [
+            47,
+            "  role = aws_iam_role.cloudtrail_logs_events_role.id\n"
+          ],
+          [
+            48,
+            "\n"
+          ],
+          [
+            49,
+            "  policy = jsonencode({\n"
+          ],
+          [
+            50,
+            "    Version = \"2012-10-17\"\n"
+          ],
+          [
+            51,
+            "    Statement = [\n"
+          ],
+          [
+            52,
+            "      {\n"
+          ],
+          [
+            53,
+            "        Effect = \"Allow\"\n"
+          ],
+          [
+            54,
+            "        Action = [\n"
+          ],
+          [
+            55,
+            "          # \"*\",\n"
+          ],
+          [
+            56,
+            "          \"logs:CreateLogGroup\",\n"
+          ],
+          [
+            57,
+            "          \"logs:CreateLogStream\",\n"
+          ],
+          [
+            58,
+            "          \"logs:PutLogEvents\",\n"
+          ],
+          [
+            59,
+            "          \"sns:Publish\",\n"
+          ],
+          [
+            60,
+            "        ]\n"
+          ],
+          [
+            61,
+            "        Resource = [\n"
+          ],
+          [
+            62,
+            "          \"*\",\n"
+          ],
+          [
+            63,
+            "          aws_cloudwatch_log_group.cloudtrail_logs_events_log_group.arn,\n"
+          ],
+          [
+            64,
+            "          aws_s3_bucket.cloudtrail_events_bucket.arn,\n"
+          ],
+          [
+            65,
+            "          aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            66,
+            "        ]\n"
+          ],
+          [
+            67,
+            "      }\n"
+          ],
+          [
+            68,
+            "    ]\n"
+          ],
+          [
+            69,
+            "  })\n"
+          ],
+          [
+            70,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/cloudtrail.tf",
+        "file_line_range": [
+          45,
+          70
+        ],
+        "file_path": "/modules/cloudtrail.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-355",
+        "repo_file_path": "/modules/cloudtrail.tf",
+        "resource": "module.iam_security_events.aws_iam_role_policy.cloudtrail_logs_events_log_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_GENERAL_65",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "environment.variables": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "environment.variables.OPENSEARCH_ENDPOINT": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "filename": [
+            {
+              "module_connection": false,
+              "name": "archive_file.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/data.tf",
+              "type": "data"
+            }
+          ],
+          "runtime": [
+            {
+              "module_connection": false,
+              "name": "lambda_runtime",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ],
+          "timeout": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_timeout",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaInVPC",
+        "check_id": "CKV_AWS_117",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured inside a VPC",
+        "check_result": {
+          "evaluated_keys": [
+            "vpc_config"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_lambda_function\" \"iam_event_monitor\" {\n"
+          ],
+          [
+            3,
+            "  description                    = \"lambda function to monitor security events\"\n"
+          ],
+          [
+            4,
+            "  filename                       = data.archive_file.iam_event_monitor.output_path\n"
+          ],
+          [
+            5,
+            "  function_name                  = \"iam_event_monitor\"\n"
+          ],
+          [
+            6,
+            "  role                           = aws_iam_role.lambda_logs_events_role.arn\n"
+          ],
+          [
+            7,
+            "  handler                        = \"iam_event_monitor.lambda_handler\"\n"
+          ],
+          [
+            8,
+            "  runtime                        = var.lambda_runtime\n"
+          ],
+          [
+            9,
+            "  timeout                        = var.lambda_function_timeout\n"
+          ],
+          [
+            10,
+            "  reserved_concurrent_executions = 10 # Set the maximum number of concurrent executions (Testing only)\n"
+          ],
+          [
+            11,
+            "\n"
+          ],
+          [
+            12,
+            "  tracing_config {\n"
+          ],
+          [
+            13,
+            "    mode = \"Active\"\n"
+          ],
+          [
+            14,
+            "  }\n"
+          ],
+          [
+            15,
+            "\n"
+          ],
+          [
+            16,
+            "  environment {\n"
+          ],
+          [
+            17,
+            "    variables = {\n"
+          ],
+          [
+            18,
+            "      SNS_TOPIC_ARN       = aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            19,
+            "      LOG_BUCKET          = aws_s3_bucket.cloudtrail_events_bucket.id\n"
+          ],
+          [
+            20,
+            "      BEDROCK_MODEL       = \"anthropic.claude-v2\"\n"
+          ],
+          [
+            21,
+            "      OPENSEARCH_ENDPOINT = var.enable_opensearch != true ? 0 : aws_opensearch_domain.cloudtrail_logs[0].arn\n"
+          ],
+          [
+            22,
+            "    }\n"
+          ],
+          [
+            23,
+            "  }\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          2,
+          24
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-aws-lambda-function-is-configured-inside-a-vpc-1",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_lambda_function.iam_event_monitor",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_SERVERLESS_5",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "environment.variables": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "environment.variables.OPENSEARCH_ENDPOINT": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "filename": [
+            {
+              "module_connection": false,
+              "name": "archive_file.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/data.tf",
+              "type": "data"
+            }
+          ],
+          "runtime": [
+            {
+              "module_connection": false,
+              "name": "lambda_runtime",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ],
+          "timeout": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_timeout",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaEnvironmentEncryptionSettings",
+        "check_id": "CKV_AWS_173",
+        "check_len": null,
+        "check_name": "Check encryption settings for Lambda environmental variable",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_lambda_function\" \"iam_event_monitor\" {\n"
+          ],
+          [
+            3,
+            "  description                    = \"lambda function to monitor security events\"\n"
+          ],
+          [
+            4,
+            "  filename                       = data.archive_file.iam_event_monitor.output_path\n"
+          ],
+          [
+            5,
+            "  function_name                  = \"iam_event_monitor\"\n"
+          ],
+          [
+            6,
+            "  role                           = aws_iam_role.lambda_logs_events_role.arn\n"
+          ],
+          [
+            7,
+            "  handler                        = \"iam_event_monitor.lambda_handler\"\n"
+          ],
+          [
+            8,
+            "  runtime                        = var.lambda_runtime\n"
+          ],
+          [
+            9,
+            "  timeout                        = var.lambda_function_timeout\n"
+          ],
+          [
+            10,
+            "  reserved_concurrent_executions = 10 # Set the maximum number of concurrent executions (Testing only)\n"
+          ],
+          [
+            11,
+            "\n"
+          ],
+          [
+            12,
+            "  tracing_config {\n"
+          ],
+          [
+            13,
+            "    mode = \"Active\"\n"
+          ],
+          [
+            14,
+            "  }\n"
+          ],
+          [
+            15,
+            "\n"
+          ],
+          [
+            16,
+            "  environment {\n"
+          ],
+          [
+            17,
+            "    variables = {\n"
+          ],
+          [
+            18,
+            "      SNS_TOPIC_ARN       = aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            19,
+            "      LOG_BUCKET          = aws_s3_bucket.cloudtrail_events_bucket.id\n"
+          ],
+          [
+            20,
+            "      BEDROCK_MODEL       = \"anthropic.claude-v2\"\n"
+          ],
+          [
+            21,
+            "      OPENSEARCH_ENDPOINT = var.enable_opensearch != true ? 0 : aws_opensearch_domain.cloudtrail_logs[0].arn\n"
+          ],
+          [
+            22,
+            "    }\n"
+          ],
+          [
+            23,
+            "  }\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          2,
+          24
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-serverless-policies/bc-aws-serverless-5",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_lambda_function.iam_event_monitor",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_General_201",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "environment.variables": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "environment.variables.OPENSEARCH_ENDPOINT": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "filename": [
+            {
+              "module_connection": false,
+              "name": "archive_file.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/data.tf",
+              "type": "data"
+            }
+          ],
+          "runtime": [
+            {
+              "module_connection": false,
+              "name": "lambda_runtime",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ],
+          "timeout": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_timeout",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaCodeSigningConfigured",
+        "check_id": "CKV_AWS_272",
+        "check_len": null,
+        "check_name": "Ensure AWS Lambda function is configured to validate code-signing",
+        "check_result": {
+          "evaluated_keys": [
+            "code_signing_config_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_lambda_function\" \"iam_event_monitor\" {\n"
+          ],
+          [
+            3,
+            "  description                    = \"lambda function to monitor security events\"\n"
+          ],
+          [
+            4,
+            "  filename                       = data.archive_file.iam_event_monitor.output_path\n"
+          ],
+          [
+            5,
+            "  function_name                  = \"iam_event_monitor\"\n"
+          ],
+          [
+            6,
+            "  role                           = aws_iam_role.lambda_logs_events_role.arn\n"
+          ],
+          [
+            7,
+            "  handler                        = \"iam_event_monitor.lambda_handler\"\n"
+          ],
+          [
+            8,
+            "  runtime                        = var.lambda_runtime\n"
+          ],
+          [
+            9,
+            "  timeout                        = var.lambda_function_timeout\n"
+          ],
+          [
+            10,
+            "  reserved_concurrent_executions = 10 # Set the maximum number of concurrent executions (Testing only)\n"
+          ],
+          [
+            11,
+            "\n"
+          ],
+          [
+            12,
+            "  tracing_config {\n"
+          ],
+          [
+            13,
+            "    mode = \"Active\"\n"
+          ],
+          [
+            14,
+            "  }\n"
+          ],
+          [
+            15,
+            "\n"
+          ],
+          [
+            16,
+            "  environment {\n"
+          ],
+          [
+            17,
+            "    variables = {\n"
+          ],
+          [
+            18,
+            "      SNS_TOPIC_ARN       = aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            19,
+            "      LOG_BUCKET          = aws_s3_bucket.cloudtrail_events_bucket.id\n"
+          ],
+          [
+            20,
+            "      BEDROCK_MODEL       = \"anthropic.claude-v2\"\n"
+          ],
+          [
+            21,
+            "      OPENSEARCH_ENDPOINT = var.enable_opensearch != true ? 0 : aws_opensearch_domain.cloudtrail_logs[0].arn\n"
+          ],
+          [
+            22,
+            "    }\n"
+          ],
+          [
+            23,
+            "  }\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          2,
+          24
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/bc-aws-272",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_lambda_function.iam_event_monitor",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_GENERAL_64",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "environment.variables": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "environment.variables.OPENSEARCH_ENDPOINT": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "enable_opensearch",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "filename": [
+            {
+              "module_connection": false,
+              "name": "archive_file.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/data.tf",
+              "type": "data"
+            }
+          ],
+          "runtime": [
+            {
+              "module_connection": false,
+              "name": "lambda_runtime",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ],
+          "timeout": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_timeout",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaDLQConfigured",
+        "check_id": "CKV_AWS_116",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)",
+        "check_result": {
+          "evaluated_keys": [
+            "dead_letter_config/[0]/target_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_lambda_function\" \"iam_event_monitor\" {\n"
+          ],
+          [
+            3,
+            "  description                    = \"lambda function to monitor security events\"\n"
+          ],
+          [
+            4,
+            "  filename                       = data.archive_file.iam_event_monitor.output_path\n"
+          ],
+          [
+            5,
+            "  function_name                  = \"iam_event_monitor\"\n"
+          ],
+          [
+            6,
+            "  role                           = aws_iam_role.lambda_logs_events_role.arn\n"
+          ],
+          [
+            7,
+            "  handler                        = \"iam_event_monitor.lambda_handler\"\n"
+          ],
+          [
+            8,
+            "  runtime                        = var.lambda_runtime\n"
+          ],
+          [
+            9,
+            "  timeout                        = var.lambda_function_timeout\n"
+          ],
+          [
+            10,
+            "  reserved_concurrent_executions = 10 # Set the maximum number of concurrent executions (Testing only)\n"
+          ],
+          [
+            11,
+            "\n"
+          ],
+          [
+            12,
+            "  tracing_config {\n"
+          ],
+          [
+            13,
+            "    mode = \"Active\"\n"
+          ],
+          [
+            14,
+            "  }\n"
+          ],
+          [
+            15,
+            "\n"
+          ],
+          [
+            16,
+            "  environment {\n"
+          ],
+          [
+            17,
+            "    variables = {\n"
+          ],
+          [
+            18,
+            "      SNS_TOPIC_ARN       = aws_sns_topic.iam_security_alerts.arn\n"
+          ],
+          [
+            19,
+            "      LOG_BUCKET          = aws_s3_bucket.cloudtrail_events_bucket.id\n"
+          ],
+          [
+            20,
+            "      BEDROCK_MODEL       = \"anthropic.claude-v2\"\n"
+          ],
+          [
+            21,
+            "      OPENSEARCH_ENDPOINT = var.enable_opensearch != true ? 0 : aws_opensearch_domain.cloudtrail_logs[0].arn\n"
+          ],
+          [
+            22,
+            "    }\n"
+          ],
+          [
+            23,
+            "  }\n"
+          ],
+          [
+            24,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          2,
+          24
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-aws-lambda-function-is-configured-for-a-dead-letter-queue-dlq",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_lambda_function.iam_event_monitor",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_GENERAL_85",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "name": [
+            {
+              "module_connection": false,
+              "name": "aws_lambda_function.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "aws_cloudwatch_log_group.lambda_function_log_group",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "cloudwatch_log_group_name",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/outputs.tf",
+              "type": "output"
+            }
+          ],
+          "retention_in_days": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_log_retention_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            },
+            {
+              "module_connection": false,
+              "name": "aws_cloudwatch_log_group.lambda_function_log_group",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_log_group_retention_in_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/outputs.tf",
+              "type": "output"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.CloudWatchLogGroupKMSKey",
+        "check_id": "CKV_AWS_158",
+        "check_len": null,
+        "check_name": "Ensure that CloudWatch Log Group is encrypted by KMS",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            27,
+            "resource \"aws_cloudwatch_log_group\" \"lambda_function_log_group\" {\n"
+          ],
+          [
+            28,
+            "  name              = \"/aws/lambda/${aws_lambda_function.iam_event_monitor.function_name}\"\n"
+          ],
+          [
+            29,
+            "  retention_in_days = var.lambda_function_log_retention_days\n"
+          ],
+          [
+            30,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          27,
+          30
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-cloudwatch-log-group-is-encrypted-by-kms",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_cloudwatch_log_group.lambda_function_log_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_LOGGING_46",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "name": [
+            {
+              "module_connection": false,
+              "name": "aws_lambda_function.iam_event_monitor",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "aws_cloudwatch_log_group.lambda_function_log_group",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "cloudwatch_log_group_name",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/outputs.tf",
+              "type": "output"
+            }
+          ],
+          "retention_in_days": [
+            {
+              "module_connection": false,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "type": "module"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_function_log_retention_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/variables.tf",
+              "type": "variable"
+            },
+            {
+              "module_connection": false,
+              "name": "aws_cloudwatch_log_group.lambda_function_log_group",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+              "type": "resource"
+            },
+            {
+              "module_connection": false,
+              "name": "lambda_log_group_retention_in_days",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/outputs.tf",
+              "type": "output"
+            }
+          ],
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.CloudWatchLogGroupRetentionYear",
+        "check_id": "CKV_AWS_338",
+        "check_len": null,
+        "check_name": "Ensure CloudWatch log groups retains logs for at least 1 year",
+        "check_result": {
+          "evaluated_keys": [
+            "retention_in_days"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            27,
+            "resource \"aws_cloudwatch_log_group\" \"lambda_function_log_group\" {\n"
+          ],
+          [
+            28,
+            "  name              = \"/aws/lambda/${aws_lambda_function.iam_event_monitor.function_name}\"\n"
+          ],
+          [
+            29,
+            "  retention_in_days = var.lambda_function_log_retention_days\n"
+          ],
+          [
+            30,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/lambda.tf",
+        "file_line_range": [
+          27,
+          30
+        ],
+        "file_path": "/modules/lambda.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-338",
+        "repo_file_path": "/modules/lambda.tf",
+        "resource": "module.iam_security_events.aws_cloudwatch_log_group.lambda_function_log_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": "BC_AWS_GENERAL_15",
+        "benchmarks": null,
+        "breadcrumbs": {
+          "source_module_": [
+            {
+              "idx": 0,
+              "name": "iam_security_events",
+              "path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/main.tf",
+              "source_module_object": null,
+              "type": "module"
+            }
+          ]
+        },
+        "caller_file_line_range": [
+          5,
+          28
+        ],
+        "caller_file_path": "/main.tf",
+        "check_class": "checkov.terraform.checks.resource.aws.SNSTopicEncryption",
+        "check_id": "CKV_AWS_26",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the SNS topic is encrypted",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_master_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": [
+          [
+            2,
+            "resource \"aws_sns_topic\" \"iam_security_alerts\" {\n"
+          ],
+          [
+            3,
+            "  name         = \"iam-security-alerts\"\n"
+          ],
+          [
+            4,
+            "  display_name = \"SNS Topic for IAM Security Alerts\"\n"
+          ],
+          [
+            5,
+            "}\n"
+          ]
+        ],
+        "connected_node": null,
+        "definition_context_file_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/sns.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "/home/mjhfvi/repository/aws-iam-security-events-monitor/modules/sns.tf",
+        "file_line_range": [
+          2,
+          5
+        ],
+        "file_path": "/modules/sns.tf",
+        "fixed_definition": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/general-15",
+        "repo_file_path": "/modules/sns.tf",
+        "resource": "module.iam_security_events.aws_sns_topic.iam_security_alerts",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.2.370",
+    "failed": 12,
+    "parsing_errors": 0,
+    "passed": 48,
+    "resource_count": 25,
+    "skipped": 0
+  }
+}

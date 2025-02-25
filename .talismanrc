@@ -1,17 +1,4 @@
 ---
 fileignoreconfig:
-- filename: main.tf
-  checksum: 258d42721439edb3f5189075b11519dd2fb363ce3df2a6071b3ec2efd9b7436b
-- filename: modules/opensearch.tf
-  checksum: 9710fd5d5718a8e6ff455b9e5ae30927f8d5ecfd65ef86be365e6b4566193ca8
-- filename: README.md
-  checksum: 6838b42265492a3094035a95eba88980d5754faf1ace9858c8e98c405f70b67d
-- filename: .secrets.baseline
-  checksum: 7ca07ad3d9a4fcf930e3e7c05c38326a1157dc9776805fbbbad1297179efc5af
-- filename: modules/providers.tf
-  checksum: 473124d6e7745d6850f13d52e0900eec640b36cb6195921729da01621d2d28a5
-- filename: secret.tfvars
-  checksum: 67aee31bc3a70feccd049febb6cb9d22a468689a3a6de1c619e1ea2837ffa6c5
-- filename: .pre-commit-config.yaml
-  checksum: a9594ab7ad2815cf65c57868b25fa5b8c2e88bbdac39bfb970f5114f61ac8ffb
+
 version: ""

@@ -18,12 +18,12 @@ resource "aws_opensearch_domain" "cloudtrail_logs" {
     volume_size = var.opensearch_ebs_volume_size
   }
 
-  #   encrypt_at_rest {
-  #     enabled = true
-  #   }
+  encrypt_at_rest {
+    enabled = false
+  }
 
   node_to_node_encryption {
-    enabled = true
+    enabled = false
   }
 
   #   domain_endpoint_options {
@@ -32,7 +32,7 @@ resource "aws_opensearch_domain" "cloudtrail_logs" {
   #   }
 
   advanced_security_options {
-    enabled                        = true
+    enabled                        = var.environment == "Testing" ? false : true
     internal_user_database_enabled = true
     # anonymous_auth_enabled         = true
 

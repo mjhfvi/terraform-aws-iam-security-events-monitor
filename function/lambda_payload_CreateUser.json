@@ -1,0 +1,57 @@
+{
+  "account": "000000000000",
+  "detail": {
+    "awsRegion": "us-east-1",
+    "eventCategory": "Management",
+    "eventID": "ced46d09-d5b0-4770-b097-1ed5ea236d76",
+    "eventName": "CreateUser",
+    "eventSource": "iam.amazonaws.com",
+    "eventTime": "2025-02-16T11:18:28Z",
+    "eventType": "AwsApiCall",
+    "eventVersion": "1.10",
+    "managementEvent": true,
+    "readOnly": false,
+    "recipientAccountId": "000000000000",
+    "requestID": "e4d3452c-b720-477b-a713-6e73c654180f",
+    "requestParameters": {
+      "userName": "test00"
+    },
+    "responseElements": {
+      "user": {
+        "arn": "arn:aws:iam::000000000000:user/test00",
+        "createDate": "Feb 16, 2025 11:18:28 AM",
+        "path": "/",
+        "userId": "AAAAAAAAAAAAAAAAA",
+        "userName": "test00"
+      }
+    },
+    "sessionCredentialFromConsole": "true",
+    "sourceIPAddress": "192.168.0.1",
+    "tlsDetails": {
+      "cipherSuite": "TLS_AES_128_GCM_SHA256",
+      "clientProvidedHostHeader": "iam.amazonaws.com",
+      "tlsVersion": "TLSv1.3"
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+    "userIdentity": {
+      "accessKeyId": "AAAAAAAAAAAAAAAAAAA",
+      "accountId": "000000000000",
+      "arn": "arn:aws:iam::000000000000:root",
+      "principalId": "000000000000",
+      "sessionContext": {
+        "attributes": {
+          "creationDate": "2025-02-16T10:05:48Z",
+          "mfaAuthenticated": "true"
+        }
+      },
+      "type": "Root"
+    }
+  },
+  "detail-type": "AWS API Call via CloudTrail",
+  "id": "f47c04c0-065f-0446-cce7-692dc97397d8",
+  "region": "us-east-1",
+  "resources": [],
+  "source": "aws.iam",
+  "time": "2025-02-16T11: 58: 13Z",
+  "version": "0"
+}

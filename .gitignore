@@ -5,4 +5,7 @@ terraform.tfstate*
 lambda/iam_event_monitor.zip
 secret.tfvars
 .terraform.tfstate.lock.info
-infracost/infracost-json.json
+infracost/*
+function/rag_db_query.zip
+tfstate.json
+function/iam_event_monitor.zip

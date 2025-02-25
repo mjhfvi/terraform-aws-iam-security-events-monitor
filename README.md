@@ -2,6 +2,8 @@
 
 ---
 
+![Alt text](diagrams/terraform_diagram.png "IAM Security Alerts Infrastructure")
+
 ## Table of Contents
 
 - [AWS Security Monitoring Solution](#aws-security-monitoring-solution)
@@ -51,32 +53,22 @@ The solution consists of:
 ## Overall Cost
 
 Checked the cost of this solution with [infracost](https://www.infracost.io/)
-total estimated monthly cost is listed in 'infracost' folder.
+total estimated monthly cost is listed in ```'infracost'``` folder,
+in Json and HTML format
 
 ## Directory Structure
 
 ```bash
 .
-├── infracost/
 ├── .vscode/
 │   ├── extensions.json
 │   ├── launch.json
 │   ├── tasks.json
 │   └── settings.json
-├── modules/
-│   ├── cloudtrail.tf
-│   ├── cloudwatch.tf
-│   ├── data.tf
-│   ├── lambda.tf
-│   ├── outputs.tf
-│   ├── providers.tf
-│   ├── s3_bucket.tf
-│   ├── sns.tf
-│   ├── variables.tf
-│   └── opensearch.tf
-├── lambda/
-│   ├── lambda_function.py
-│   └── lambda_payload_CreateUser.json
+├── diagrams/
+│   ├── requirements.txt
+│   ├── terraform_diagram.png
+│   ├── terraform_diagram.py
 ├── documentation/
 │   ├── SECURITY.md
 │   ├── TESTING.md
@@ -84,9 +76,33 @@ total estimated monthly cost is listed in 'infracost' folder.
 │   ├── LIMITATIONS.md
 │   ├── TODO.md
 │   └── TOOLS.md
+├── function/
+│   ├── lambda_function.py
+│   ├── lambda_payload_CreateUser.json
+│   └── rag_db_query.py
+├── infracost/
+├── modules/
+│   ├── cloudtrail.tf
+│   ├── cloudwatch.tf
+│   ├── data.tf
+│   ├── lambda.tf
+│   ├── opensearch.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── s3_bucket.tf
+│   ├── sns.tf
+│   └── variables.tf
 ├── .gitignore
+├── .gitkeep
+├── .gitleaks.toml
+├── .markdownlint.json
 ├── .pre-commit-config.yaml
+├── .secrets.baseline
+├── .talismanrc
+├── .terraform-docs.yml
+├── .tflint.hcl
 ├── main.tf
+├── outputs.tf
 ├── README.md
 ├── secrets.tfvars
 ├── variables.tf
@@ -154,6 +170,9 @@ module "iam_security_events" {
   opensearch_master_user_name         = var.opensearch_master_user_name
   opensearch_master_user_password     = var.opensearch_master_user_password
   opensearch_ebs_volume_size          = var.opensearch_ebs_volume_size
+  enable_user_actions                 = true  # default(false)
+  enable_group_actions                = true  # default(false)
+  enable_user_accesskey_actions       = false # default(false)
 }
 ```
 
@@ -223,10 +242,6 @@ creating or destroying OpenSearch resource could take up to 20m
 
 ---
 
-## Terraform Documentation
-
-[Terraform Documentation](./documentation/TERRAFORM.md)
-
 ## Security Documentation
 
 [Security Documentation](./documentation/SECURITY.md)
@@ -278,23 +293,26 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access\_key to use for the server | `string` | n/a | yes |
+| <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access\_key, admin login permissions to AWS resources | `string` | n/a | yes |
 | <a name="input_aws_opensearch_domain_instance_type"></a> [aws\_opensearch\_domain\_instance\_type](#input\_aws\_opensearch\_domain\_instance\_type) | aws opensearch domain instance type | `string` | `"t3.small.search"` | no |
-| <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret\_key to use for the server | `string` | n/a | yes |
+| <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret\_key, admin login permissions to AWS resources | `string` | n/a | yes |
 | <a name="input_cloudwatch_log_retention_days"></a> [cloudwatch\_log\_retention\_days](#input\_cloudwatch\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `14` | no |
-| <a name="input_enable_notification_email"></a> [enable\_notification\_email](#input\_enable\_notification\_email) | User email address notifications | `bool` | `true` | no |
-| <a name="input_enable_notification_phone"></a> [enable\_notification\_phone](#input\_enable\_notification\_phone) | User phone address notifications | `bool` | `false` | no |
-| <a name="input_enable_opensearch"></a> [enable\_opensearch](#input\_enable\_opensearch) | Enable OpenSearch for monitoring logs from CloudTrail | `bool` | `false` | no |
+| <a name="input_enable_group_actions"></a> [enable\_group\_actions](#input\_enable\_group\_actions) | Enable/Disable group actions lambda function for cloudwatch events rule | `bool` | `false` | no |
+| <a name="input_enable_notification_email"></a> [enable\_notification\_email](#input\_enable\_notification\_email) | Enable/Disable user email address notifications | `bool` | `true` | no |
+| <a name="input_enable_notification_phone"></a> [enable\_notification\_phone](#input\_enable\_notification\_phone) | Enable/Disable user phone address notifications | `bool` | `false` | no |
+| <a name="input_enable_opensearch"></a> [enable\_opensearch](#input\_enable\_opensearch) | Enable/Disable OpenSearch for monitoring logs from CloudTrail | `bool` | `false` | no |
+| <a name="input_enable_user_accesskey_actions"></a> [enable\_user\_accesskey\_actions](#input\_enable\_user\_accesskey\_actions) | Enable/Disable user accesskey actions lambda function for cloudwatch events rule | `bool` | `true` | no |
+| <a name="input_enable_user_actions"></a> [enable\_user\_actions](#input\_enable\_user\_actions) | Enable/Disable user actions lambda function for cloudwatch events rule | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS Environment (Development, Testing, Staging, Production) | `string` | `"Testing"` | no |
 | <a name="input_lambda_function_log_retention_days"></a> [lambda\_function\_log\_retention\_days](#input\_lambda\_function\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `7` | no |
-| <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | lambda function timeout | `number` | `30` | no |
-| <a name="input_notification_email"></a> [notification\_email](#input\_notification\_email) | User email address notifications | `list(string)` | `[]` | no |
-| <a name="input_notification_phone"></a> [notification\_phone](#input\_notification\_phone) | User phone number notifications | `list(string)` | `[]` | no |
-| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Set opensearch user name login password | `number` | `10` | no |
+| <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout for lambda function | `number` | `30` | no |
+| <a name="input_notification_email"></a> [notification\_email](#input\_notification\_email) | List user email address notifications | `list(string)` | `[]` | no |
+| <a name="input_notification_phone"></a> [notification\_phone](#input\_notification\_phone) | List user phone number notifications | `list(string)` | `[]` | no |
+| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Set opensearch ebs volume size | `number` | `10` | no |
 | <a name="input_opensearch_master_user_name"></a> [opensearch\_master\_user\_name](#input\_opensearch\_master\_user\_name) | Set opensearch user name login | `string` | `"admin"` | no |
-| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Set opensearch user name login password | `string` | `"admin"` | no |
+| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Set opensearch user name login password | `string` | `"admin1admin1"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | set the tag for name of the project | `string` | `null` | no |
-| <a name="input_project_owner"></a> [project\_owner](#input\_project\_owner) | set the tag for environment project owner name, a person or a depatment | `string` | `null` | no |
+| <a name="input_project_owner"></a> [project\_owner](#input\_project\_owner) | set the tag for environment project owner name, a person or depatment | `string` | `null` | no |
 
 ## Outputs
 
@@ -305,6 +323,8 @@ No resources.
 | <a name="output_iam_management"></a> [iam\_management](#output\_iam\_management) | Identity and Access Management |
 | <a name="output_lambda_function_name"></a> [lambda\_function\_name](#output\_lambda\_function\_name) | Lambda function name |
 | <a name="output_lambda_log_group_retention_in_days"></a> [lambda\_log\_group\_retention\_in\_days](#output\_lambda\_log\_group\_retention\_in\_days) | Number of retention days for lambda log group |
+| <a name="output_opensearch_domain_name"></a> [opensearch\_domain\_name](#output\_opensearch\_domain\_name) | opensearch domain name |
+| <a name="output_opensearch_url"></a> [opensearch\_url](#output\_opensearch\_url) | opensearch url |
 | <a name="output_s3_bucket_domain_name"></a> [s3\_bucket\_domain\_name](#output\_s3\_bucket\_domain\_name) | Domain name of the S3 bucket for logs |
 | <a name="output_s3_bucket_id"></a> [s3\_bucket\_id](#output\_s3\_bucket\_id) | Id of the S3 bucket for logs |
 | <a name="output_s3_bucket_name"></a> [s3\_bucket\_name](#output\_s3\_bucket\_name) | Name of the S3 bucket for logs |
