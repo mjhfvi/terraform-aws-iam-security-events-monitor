@@ -1,15 +1,9 @@
 ---
 fileignoreconfig:
-- filename: modules/cloudwatch.tf
-  checksum: 4c27c6dc95890aa747272393938cbd13fa3c19002acfba31ab8cba6daeb361ba
+- filename: variables.tf
+  checksum: 4ad6a32333e7101dcec21e1d91b3ed78cadf3ba68f59fe243b8db3384322aa95
 - filename: main.tf
   checksum: 92b258d04c0c20907156fd111f191bb854b099b877185c32c1b0dabdb95859c6
-- filename: function/lambda_payload_CreateUser.json
-  checksum: 4c0002573e47a3e10ee1614e462f8c2a75138d8f161feac1cda4518947540044
-- filename: modules/variables.tf
-  checksum: 7a2908462bc6a8c3afc3cd19cb3b2fe9ee4d093ca67bd98cdd2907489e2ea94a
 - filename: README.md
-  checksum: 7909efbfd14a2118adca7ad6f4192282e6448aed8a179922ea9a1fbc9cb7cb18
-- filename: variables.tf
-  checksum: ddbb7121a864e1de87b454931ec3e20a89969e953ee5e5a42568502d8a8bb2f9
+  checksum: 86ddf24317b6a7e3bfee9e44174021d6690906ae2785ff0ba694b6f32d6d2a45
 version: ""

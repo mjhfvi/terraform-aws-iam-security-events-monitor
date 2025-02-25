@@ -28,10 +28,10 @@ repos:
       # - id: check-yaml
       #   verbose: true
       #   args: [--allow-multiple-documents]
-      - id: check-json
-        verbose: true
       - id: pretty-format-json
         args: [--autofix]
+        verbose: true
+      - id: check-json
         verbose: true
       - id: detect-aws-credentials
       # - id: detect-private-key

@@ -293,23 +293,26 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access\_key to use for the server | `string` | n/a | yes |
+| <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | AWS access\_key, admin login permissions to AWS resources | `string` | n/a | yes |
 | <a name="input_aws_opensearch_domain_instance_type"></a> [aws\_opensearch\_domain\_instance\_type](#input\_aws\_opensearch\_domain\_instance\_type) | aws opensearch domain instance type | `string` | `"t3.small.search"` | no |
-| <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret\_key to use for the server | `string` | n/a | yes |
+| <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS secret\_key, admin login permissions to AWS resources | `string` | n/a | yes |
 | <a name="input_cloudwatch_log_retention_days"></a> [cloudwatch\_log\_retention\_days](#input\_cloudwatch\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `14` | no |
+| <a name="input_enable_group_actions"></a> [enable\_group\_actions](#input\_enable\_group\_actions) | enable group actions lambda function for cloudwatch events rule | `bool` | `false` | no |
 | <a name="input_enable_notification_email"></a> [enable\_notification\_email](#input\_enable\_notification\_email) | User email address notifications | `bool` | `true` | no |
 | <a name="input_enable_notification_phone"></a> [enable\_notification\_phone](#input\_enable\_notification\_phone) | User phone address notifications | `bool` | `false` | no |
 | <a name="input_enable_opensearch"></a> [enable\_opensearch](#input\_enable\_opensearch) | Enable OpenSearch for monitoring logs from CloudTrail | `bool` | `false` | no |
+| <a name="input_enable_user_accesskey_actions"></a> [enable\_user\_accesskey\_actions](#input\_enable\_user\_accesskey\_actions) | enable user accesskey actions lambda function for cloudwatch events rule | `bool` | `true` | no |
+| <a name="input_enable_user_actions"></a> [enable\_user\_actions](#input\_enable\_user\_actions) | enable user actions lambda function for cloudwatch events rule | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | AWS Environment (Development, Testing, Staging, Production) | `string` | `"Testing"` | no |
 | <a name="input_lambda_function_log_retention_days"></a> [lambda\_function\_log\_retention\_days](#input\_lambda\_function\_log\_retention\_days) | Number of days to retain CloudWatch logs | `number` | `7` | no |
-| <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | lambda function timeout | `number` | `30` | no |
-| <a name="input_notification_email"></a> [notification\_email](#input\_notification\_email) | User email address notifications | `list(string)` | `[]` | no |
-| <a name="input_notification_phone"></a> [notification\_phone](#input\_notification\_phone) | User phone number notifications | `list(string)` | `[]` | no |
-| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Set opensearch user name login password | `number` | `10` | no |
+| <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout for lambda function | `number` | `30` | no |
+| <a name="input_notification_email"></a> [notification\_email](#input\_notification\_email) | List user email address notifications | `list(string)` | `[]` | no |
+| <a name="input_notification_phone"></a> [notification\_phone](#input\_notification\_phone) | List user phone number notifications | `list(string)` | `[]` | no |
+| <a name="input_opensearch_ebs_volume_size"></a> [opensearch\_ebs\_volume\_size](#input\_opensearch\_ebs\_volume\_size) | Set opensearch ebs volume size | `number` | `10` | no |
 | <a name="input_opensearch_master_user_name"></a> [opensearch\_master\_user\_name](#input\_opensearch\_master\_user\_name) | Set opensearch user name login | `string` | `"admin"` | no |
-| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Set opensearch user name login password | `string` | `"admin"` | no |
+| <a name="input_opensearch_master_user_password"></a> [opensearch\_master\_user\_password](#input\_opensearch\_master\_user\_password) | Set opensearch user name login password | `string` | `"admin1admin1"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | set the tag for name of the project | `string` | `null` | no |
-| <a name="input_project_owner"></a> [project\_owner](#input\_project\_owner) | set the tag for environment project owner name, a person or a depatment | `string` | `null` | no |
+| <a name="input_project_owner"></a> [project\_owner](#input\_project\_owner) | set the tag for environment project owner name, a person or depatment | `string` | `null` | no |
 
 ## Outputs
 

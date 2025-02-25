@@ -1,5 +1,4 @@
 {
-  "/_commands": "Source: https://code.visualstudio.com/docs/getstarted/settings",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -8,6 +7,11 @@
     "editor.defaultColorDecorators": "never",
     "editor.defaultFormatter": "ms-python.autopep8",
     "editor.formatOnType": true
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
   },
   "[yaml]": {
     "diffEditor.ignoreTrimWhitespace": false,
@@ -21,6 +25,10 @@
     },
     "editor.tabSize": 2
   },
+  "_comment": "Source: https://code.visualstudio.com/docs/getstarted/settings",
+  "cSpell.words": [
+    "tfstate"
+  ],
   "codeium.enableConfig": {
     "*": true,
     "gitignore": true
