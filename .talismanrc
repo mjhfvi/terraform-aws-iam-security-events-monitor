@@ -1,9 +1,4 @@
 ---
 fileignoreconfig:
-- filename: main.tf
-  checksum: 92b258d04c0c20907156fd111f191bb854b099b877185c32c1b0dabdb95859c6
-- filename: variables.tf
-  checksum: 8d721983d6d8ee14a0686a3eb7f324876a80d444792c3c3ea95d36f3883a4a9d
-- filename: README.md
-  checksum: d6283ef7103c59067df6c2cff8603e1114d570dfe1a6f34c15dc71b8c895de15
+
 version: ""

@@ -146,12 +146,12 @@ repos:
       #   description: Detect hardcoded system secrets using Gitleaks
       #   args: [--no-banner, --config=.gitleaks.toml]
 
-  # - repo: https://github.com/thoughtworks/talisman
-  #   rev: v1.32.0
-  #   hooks:
-  #     - id: talisman-commit
-  #       name: talisman (scans git to ensure that potential secrets or sensitive information)
-  #       entry: cmd --githook pre-commit
+  - repo: https://github.com/thoughtworks/talisman
+    rev: v1.32.0
+    hooks:
+      - id: talisman-commit
+        name: talisman (scans git to ensure that potential secrets or sensitive information)
+        entry: cmd --githook pre-commit
 
   # - repo: https://github.com/gitguardian/ggshield  # need token for use
   #   rev: v1.28.0
