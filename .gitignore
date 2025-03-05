@@ -1,11 +1,8 @@
 **/plan-out
-.terraform.lock.hcl
 **/.terraform/
+**.zip
+.terraform.lock.hcl
 terraform.tfstate*
-lambda/iam_event_monitor.zip
 secret.tfvars
-.terraform.tfstate.lock.info
 infracost/*
-function/rag_db_query.zip
 tfstate.json
-function/iam_event_monitor.zip

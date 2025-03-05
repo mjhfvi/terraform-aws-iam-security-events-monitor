@@ -3,16 +3,19 @@
 To test the monitoring system:
 
 1. IAM User Creation:
+
    ```bash
    aws iam create-user --user-name test-user
    ```
 
 2. Access Key Creation:
+
    ```bash
    aws iam create-access-key --user-name test-user
    ```
 
 3. Security Group Rule Addition:
+
    ```bash
    aws ec2 authorize-security-group-ingress \
      --group-id <security-group-id> \
@@ -22,6 +25,7 @@ To test the monitoring system:
    ```
 
 4. S3 Bucket Policy Modification:
+
    ```bash
    aws s3api put-bucket-policy --bucket <bucket-name> --policy file://policy.json
    ```
@@ -29,19 +33,23 @@ To test the monitoring system:
 You should receive SNS notifications for each of these actions.
 
 # check events flow with AWS cli
+
 ```bash
 aws iam create-user --user-name test01
 aws cloudtrail lookup-events --region us-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=CreateUser --max-results 10
 aws cloudtrail lookup-events --region eu-west-1 --lookup-attributes AttributeKey=EventName,AttributeValue=CreateUser --max-results 10
 ```
+
 ```bash
 aws s3 cp s3://scylladb-security-monitor/AWSLogs/o-cxkfuitcyr/770263851087/CloudTrail/us-east-1/2025/02/12/ . --recursive
 gzip -d *.gz
 cat *.json | jq '.Records[] | select(.eventName == "CreateUser" and .eventSource == "iam.amazonaws.com")'
 ```
+
 ```bash
 aws logs filter-log-events --log-group-name /aws/lambda/ScyllaDB-security-monitor-lambda-function --filter-pattern '{ $.eventName = "CreateUser" }' --max-items 10 | jq '.events[] | {timestamp: (.timestamp / 1000 | strftime("%Y-%m-%d %H:%M:%S")), message: .message}'
 ```
+
 ```bash
 aws lambda invoke \
     --function-name ScyllaDB-security-monitor-lambda-function \
