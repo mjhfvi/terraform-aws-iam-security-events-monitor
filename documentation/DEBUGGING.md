@@ -1,6 +1,9 @@
 # Debugging AWS with Terraform
+
 ### set aws config file for cli
+
 - edit aws config file: ~/.aws/credentials
+
 ```bash
 [default] \
 aws_access_key_id= \
@@ -10,33 +13,43 @@ output=
 ```
 
 ### adit aws users
+
 ```bash
 aws iam list-users
 aws iam get-user --user-name test01
 aws iam create-user --user-name test01
 ```
+
 ### query aws lambda
+
 ```bash
 aws lambda list-functions
 aws lambda get-function --function-name FUNCTION_NAME
 aws lambda invoke --function-name FUNCTION_NAME --cli-binary-format raw-in-base64-out --payload '{ "name": "Bob" }' response.json
 ```
+
 ### qurery aws resources
+
 ```bash
 aws logs get-log-events --log-group-name GROUP_LOGS --log-stream-name STREAM_LOGS
 aws logs describe-log-groups
 aws logs describe-log-streams --log-group-name CLOUDTRAIL_LOGS
 ```
+
 ### update terraform resources
+
 ```bash
 terraform apply -replace="RESOURCE_MODULE.RESOURCE_TYPE" -var-file="secret.tfvars" -auto-approve
 ```
+
 - Example:
+
 ```
 terraform apply -replace="aws_iam_policy_document.lambda_logging" -var-file="secret.tfvars" -auto-approve
 ```
 
 ## CloudTrail Log Access, run this command, then build terraform user
+
 ```bash
 aws organizations enable-aws-service-access --service-principal cloudtrail.amazonaws.com
 aws iam create-user --user-name USER_NAME
@@ -64,7 +77,7 @@ aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,Attribut
 ```
 
 ### remove SNS Pending confirmation
+
 ```bash
 aws sns list-subscriptions
 ```
-

@@ -13,13 +13,9 @@
     "HuggingFace.huggingface-vscode",
     "Tanvir.ollama-modelfile",
     "AnikGhosh.ollama-copilot",
-    "Continue.continue",
     "ms-vscode.remote-repositories",
     "njqdev.vscode-python-typehint",
-    "ms-python.vscode-pylance",
-    "ms-python.flake8",
     "ms-toolsai.jupyter",
-    "ms-vscode-remote.remote-wsl",
     "GitHub.copilot",
     "GitHub.copilot-chat",
     "DavidAnson.vscode-markdownlint",
@@ -45,7 +41,7 @@
     "yzhang.markdown-all-in-one",
     "Infracost.infracost",
     "matheusq94.TFS",
-    "NecatiARSLAN.aws-lambda-vscode-extension",
+    "NecatiARSLAN.aws-lambda-vscode-extension"
   ],
   "unwantedRecommendations": []
 }

@@ -1,10 +1,16 @@
-# Terraform Module to Alert IAM Resources use
+# <font color="orange">Terraform Module to Alert IAM Resources use</font>
 
 ---
 
 ![Alt text](diagrams/terraform_diagram.png "IAM Security Alerts Infrastructure")
 
+## 📌 <font color="purple">🎯 Overview</font>
+
+This repository is designed to deploy AWS security monitoring alert system with terraform module
+
 ## Table of Contents
+
+<details><summary></a></summary>
 
 - [AWS Security Monitoring Solution](#aws-security-monitoring-solution)
 - [Architecture](#architecture)
@@ -24,15 +30,16 @@
   - [From Source](#from-source)
 - [Cleanup](#cleanup)
 - [Troubleshooting](#troubleshooting)
+   </details>
 
-## AWS Security Monitoring Solution
+## <font color="purple"> 🛠️ AWS Security Monitoring Solution</font>
 
 This solution provides automated security monitoring for your AWS environment,
 using Lambda and EventBridge resources, to monitor and alert on
 critical security events including IAM user creation, access key creation,
 S3 bucket policy changes, and security group modifications.
 
-## Architecture
+## <font color="purple">Architecture</font>
 
 The solution consists of:
 
@@ -43,20 +50,20 @@ The solution consists of:
 - IAM roles and policies for secure operation
 - S3 bucket for storing CloudTrail logs (mendatory for CloudTrail)
 
-## Prerequisites
+## <font color="purple">🔧 Prerequisites</font>
 
 - AWS CLI configured with appropriate credentials
 - Terraform >= 5.86.0
 - Python 3.12 or later for the lambda function
 - An AWS account with sufficient permissions to create the required resources
 
-## Overall Cost
+## <font color="purple">Overall Cost</font>
 
 Checked the cost of this solution with [infracost](https://www.infracost.io/)
-total estimated monthly cost is listed in ```'infracost'``` folder,
+total estimated monthly cost is listed in `'infracost'` folder,
 in Json and HTML format
 
-## Directory Structure
+## <font color="purple">Directory Structure</font>
 
 ```bash
 .
@@ -143,7 +150,7 @@ data.tf = Data information for the resources
 
 opensearch = OpenSearch configuration
 
-## Deployment Instructions
+## <font color="purple">Deployment Instructions</font>
 
 ### From Terraform Registry
 
@@ -220,7 +227,7 @@ module "iam_security_events" {
 
 7. Subscribe to the SNS topic (the ARN will be in the Terraform outputs)
 
-## Cleanup
+## <font color="purple">Cleanup</font>
 
 To remove all created resources:
 
@@ -233,40 +240,26 @@ terraform destroy -var-file="secret.tfvars" -auto-approve
 - approve the email from AWS "AWS Notification - Subscription Confirmation"
   by clicking the link in the email `SubscribeURL`
 
-## Troubleshooting
+## <font color="purple">Troubleshooting</font>
 
 Common issues and solutions:
 creating or destroying OpenSearch resource could take up to 20m
 
-## Documentation
+## <font color="purple">Documentation</font>
 
 ---
 
-## Security Documentation
+### [Security Documentation](./documentation/SECURITY.md)
 
-[Security Documentation](./documentation/SECURITY.md)
+### [Testing Documentation](./documentation/TESTING.md)
 
-## Testing Documentation
+### [Debugging Documentation](./documentation/DEBUGGING.md)
 
-[Testing Documentation](./documentation/TESTING.md)
+### [Limitations Documentation](./documentation/LIMITATIONS.md)
 
-## Debugging Documentation
+### [Todo Documentation](./documentation/TODO.md)
 
-[Debugging Documentation](./documentation/DEBUGGING.md)
-
-## Limitations Documentation
-
-[Limitations Documentation](./documentation/LIMITATIONS.md)
-
-## Todo Documentation
-
-[Todo Documentation](./documentation/TODO.md)
-
-## Tools Documentation
-
-[Tools Documentation](./documentation/TOOLS.md)
-
-## Terraform Modules Breakdown
+### [Tools Documentation](./documentation/TOOLS.md)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
