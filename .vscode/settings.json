@@ -50,7 +50,7 @@
   "editor.autoIndent": "full",
   "editor.cursorBlinking": "expand",
   "editor.insertSpaces": false,
-  "editor.minimap.autohide": true,
+  "editor.minimap.autohide": "mouseover",
   "editor.minimap.enabled": true,
   "editor.minimap.size": "fit",
   "editor.scrollbar.vertical": "auto",
